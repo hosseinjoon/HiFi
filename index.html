@@ -1,4 +1,4 @@
-<!-- HiFi Radio Global v1.28.55 — lifecycle-safe background playback + stable post-resume scroll shields -->
+<!-- HiFi Radio Global v1.28.56 — lifecycle-safe background playback + locked-row menu tap fix -->
 <!-- v1.28.25 FIX FA+ Buffer EN + VOL EN, FA pure Persian -->
 <!-- v1.28.24 FINAL TEXTURE 3 - light fast boot texture 9KB webp / 23KB jpg with small satellites, radio, music notes, teal/amber glow, old heavy 3MB image removed -->
 <!-- v1.28.22 FIX vol flicker EN<->FA after system steps + optimized boot
@@ -6988,6 +6988,23 @@ document.head.appendChild(css);
     catch (_) { return null; }
   }
   function hasNative() { var p = nativePlugin(); return !!(p && typeof p.command === 'function'); }
+  function nativePauseWasExplicit(event) {
+    if (!event) return false;
+    if (event.userPaused === true || event.userInitiated === true || event.byUser === true ||
+        event.manual === true || event.intentional === true || event.stoppedByUser === true) return true;
+    /* A real Media3 user/notification pause normally carries playWhenReady=false;
+       an exhausted live stream is reported as ended/idle/error instead. */
+    if (event.playWhenReady === false && !event.error &&
+        !/ended|idle|error/i.test(String(event.playbackState || event.state || ''))) return true;
+    var hint = [event.reason, event.cause, event.origin, event.source].filter(Boolean).join(' ').toLowerCase();
+    return /(?:\buser\b|manual|notification|media[ -]?button|explicit|remote-control)/.test(hint);
+  }
+  function nativeResultIsLive(result) {
+    if (!result) return false;
+    if (result.isPlaying === true) return true;
+    return /(?:^|\b)(playing|live)(?:\b|$)/i.test(String(result.state || result.status || ''));
+  }
+  function clearPausedMarker() { try { window.__hifiUserPaused = false; } catch (_) {} }
   function commandNative(action, detail) {
     var p = nativePlugin();
     if (!p || typeof p.command !== 'function') return Promise.reject(new Error('NO_NATIVE'));
@@ -7086,18 +7103,31 @@ document.head.appendChild(css);
   }
   function startNative(gen) {
     setLink('connecting');
+    clearTimeout(connectTimer);
+    /* A bridge command being accepted does not prove that bytes are flowing.
+       Keep this watchdog alive until Media3 confirms playing (or explicitly
+       returns a live state), so a silent post-start failure cannot leave the
+       UI stuck in a fake playing state. */
     connectTimer = setTimeout(function () { fail(gen); }, 12000);
-    commandNative('select', { url: station.url, name: station.name || '', country: station.country || '', language: station.language || '', index: typeof currentIndex === 'number' ? currentIndex : 0, station: station }).then(function () {
+    commandNative('select', { url: station.url, name: station.name || '', country: station.country || '', language: station.language || '', index: typeof currentIndex === 'number' ? currentIndex : 0, station: station }).then(function (result) {
       if (gen !== generation) return;
-      clearTimeout(connectTimer); retryCount = 0; userPaused = false;
-      syncUi(true);
-      /* Native state callback can refine connecting/live; avoid fake buffer. */
+      userPaused = false;
+      clearPausedMarker();
+      if (nativeResultIsLive(result)) {
+        clearTimeout(connectTimer); retryCount = 0;
+        syncUi(true); setLink('live');
+        try { window.dispatchEvent(new CustomEvent('hifi-radio-engine-live', { detail: { source: 'native-command' } })); } catch (_) {}
+      } else if (result && result.buffering) {
+        setLink('connecting');
+      }
+      /* Otherwise the native state callback remains the source of truth. */
     }).catch(function () { fail(gen); });
   }
   function startCurrent(isRetry) {
     if (!station || !station.url) return;
     clearTimers();
     userPaused = false;
+    clearPausedMarker();
     var gen = generation;
     setLink('connecting');
     if (hasNative()) startNative(gen); else startBrowser(gen);
@@ -7122,7 +7152,9 @@ document.head.appendChild(css);
   }
   function play() {
     userPaused = false;
+    clearPausedMarker();
     clearTimeout(retryTimer);
+    retryCount = 0;
     if (!station || !station.url) {
       try {
         var initial = (typeof stations !== 'undefined' && stations.length) ? stations[Math.max(0, Math.min(stations.length - 1, Number(currentIndex) || 0))] : null;
@@ -7136,8 +7168,19 @@ document.head.appendChild(css);
       return;
     }
     if (hasNative()) {
+      var playGen = generation;
       setLink('connecting');
-      commandNative('play', { url: station && station.url }).then(function () { syncUi(true); }).catch(function () { fail(generation); });
+      clearTimeout(connectTimer);
+      connectTimer = setTimeout(function () { fail(playGen); }, 12000);
+      commandNative('play', { url: station && station.url }).then(function (result) {
+        if (playGen !== generation) return;
+        if (nativeResultIsLive(result)) {
+          clearTimeout(connectTimer); retryCount = 0;
+          syncUi(true); setLink('live');
+          try { window.dispatchEvent(new CustomEvent('hifi-radio-engine-live', { detail: { source: 'native-command' } })); } catch (_) {}
+        }
+        /* Do not call syncUi(true) merely because command() resolved. */
+      }).catch(function () { fail(playGen); });
       return;
     }
     if (!audio && station) { startCurrent(false); return; }
@@ -7165,19 +7208,22 @@ document.head.appendChild(css);
     var playing = hasNative() ? (typeof isPlaying !== 'undefined' && isPlaying) : !!(audio && !audio.paused);
     if (playing) pause(); else play();
   }
-  function retry() {
+  function retry(options) {
     if (!station) {
       try { station = stations[currentIndex]; } catch (_) {}
     }
-    generation++; retryCount = 0; userPaused = false; startCurrent(true);
+    var silent = options === true || !!(options && options.silent === true);
+    generation++; retryCount = 0; userPaused = false; clearPausedMarker();
+    startCurrent(!silent);
   }
   function syncSystemVolume() {
     if (!hasNative()) return;
     commandNative('syncVolume', {}).catch(function () {});
   }
   function getAudio() { return audio; }
+  function getStation() { return station; }
 
-  window.HifiRadioEngine = { prime: prime, select: select, play: play, pause: pause, stop: stop, toggle: toggle, retry: retry, setVolume: applyVolume, setLevel: function (value) { paintVolume(value, false); }, syncSystemVolume: syncSystemVolume, getAudio: getAudio, hasNative: hasNative };
+  window.HifiRadioEngine = { prime: prime, select: select, play: play, pause: pause, stop: stop, toggle: toggle, retry: retry, setVolume: applyVolume, setLevel: function (value) { paintVolume(value, false); }, syncSystemVolume: syncSystemVolume, getAudio: getAudio, getStation: getStation, hasNative: hasNative };
 
   /* Media3 is the source of truth in APK. Its state must drive LCD status. */
   try {
@@ -7188,6 +7234,15 @@ document.head.appendChild(css);
         if (typeof event.index === 'number') {
           try { currentIndex = Math.max(0, Math.min(stations.length - 1, event.index)); } catch (_) {}
         }
+        /* Keep the engine's retry source aligned with Media3, including a
+           station chosen by an older/native controller rather than Engine.select(). */
+        try {
+          var stateStation = event.station && event.station.url ? event.station : null;
+          if (!stateStation && typeof stations !== 'undefined' && stations.length) {
+            stateStation = stations[Math.max(0, Math.min(stations.length - 1, Number(currentIndex) || 0))];
+          }
+          if (stateStation && stateStation.url) { station = stateStation; mediaMetadata(station); }
+        } catch (_) {}
         if (typeof event.volume === 'number') {
           try { paintVolume(event.volume, true); } catch (_) {}
         }
@@ -7204,21 +7259,41 @@ document.head.appendChild(css);
           return;
         }
         if (typeof event.isPlaying === 'boolean' && !event.isPlaying) {
-          userPaused = true;
+          if (userPaused || window.__hifiUserPaused === true || nativePauseWasExplicit(event)) {
+            userPaused = true;
+            syncUi(false);
+            setLink('paused');
+            return;
+          }
+          /* This is not a user pause. Leave the intent live and notify the
+             bounded recovery owner instead of teaching the engine that the
+             listener deliberately paused it. */
+          userPaused = false;
           syncUi(false);
-          setLink('paused');
+          setLink('connecting');
+          try { window.dispatchEvent(new CustomEvent('hifi-radio-engine-unexpected-stop', { detail: event })); } catch (_) {}
         }
       });
-      nativeStatePlugin.addListener('error', function () {
+      nativeStatePlugin.addListener('error', function (event) {
+        try { window.dispatchEvent(new CustomEvent('hifi-radio-engine-error', { detail: event || {} })); } catch (_) {}
         fail(generation);
       });
     }
   } catch (_) {}
 
-  /* Handle commands from existing controllers only in the browser. Native commands
-     are already sent by HifiRadioPlayer and must not be duplicated. */
+  /* Always mirror the selected source into this engine. Native commands from
+     older controllers are still sent only once by HifiRadioPlayer; mirroring
+     here prevents a later Play/retry from falling back to a stale station. */
   window.addEventListener('hifi-radio-command', function (e) {
     var d = e.detail || {};
+    if (d.type === 'select' || d.type === 'play') {
+      try {
+        var commandStation = d.station && d.station.url ? d.station : null;
+        if (!commandStation && typeof d.index === 'number' && typeof stations !== 'undefined') commandStation = stations[d.index];
+        if (!commandStation && typeof stations !== 'undefined' && stations.length) commandStation = stations[Math.max(0, Math.min(stations.length - 1, Number(currentIndex) || 0))];
+        if (commandStation && commandStation.url) prime(commandStation);
+      } catch (_) {}
+    }
     if (hasNative()) return;
     if (d.type === 'select' && d.station) select(d.station);
     else if (d.type === 'play') play();
@@ -13895,6 +13970,7 @@ html body #volumeValue{font-variant-numeric:tabular-nums!important;letter-spacin
 
 
 <script id="hifi-locked-firstplay-fix-v12828">
+/* v1.28.56 FIX locked-row ⋯ taps: preserve explicit row controls before PIN gating. */
 /* v1.28.30 FIX locked first-play: prevent early currentIndex and ensure playerView after PIN */
 (function(){
   if(window.__hifiLockedFix12828) return; window.__hifiLockedFix12828=true;
@@ -13944,6 +14020,18 @@ html body #volumeValue{font-variant-numeric:tabular-nums!important;letter-spacin
     out.addEventListener('click', function(e){
       var row=e.target.closest && e.target.closest('.simple-row');
       if(!row) return;
+      /* Controls inside a row are not a request to play/select that row. This
+         is especially important for the trailing ⋯ button: the capture-phase
+         lock gate runs before the ordinary row-menu handler, so it must leave
+         the event alone for that button (and the other explicit actions).
+         A legacy row can itself be a button, hence the control must be a
+         descendant of the row rather than the row element itself. */
+      var control=e.target.closest && e.target.closest(
+        '[data-row-more],[data-my-more],.st-more,.fav-more,' +
+        '[data-heart],[data-my-del],[data-from-persian],.st-del,' +
+        '.parent-lock,.hifi-ord,.fav-drag-btn,button,a,input,select,textarea,[role="button"]'
+      );
+      if(control && control!==row) return;
       // If this row is for category (data-category) or other, let existing handler run first
       // For persian/popular rows, they may have data-index or similar
       var st=null;
@@ -15000,6 +15088,476 @@ html body #volumeValue{font-variant-numeric:tabular-nums!important;letter-spacin
   window.setTimeout(recover,0);
 })();
 </script>
+<!-- v1.28.57 — persistent live-stream recovery; no layout mutation. -->
+<script id="hifi-stream-recovery-v12857">
+/* HiFi Radio Global — resilient live-stream recovery v1.28.57
+   ----------------------------------------------------------------
+   A live stream is allowed to reconnect only after this page has observed a
+   real playback intent.  Explicit pause/stop, the secure PIN sheet, and the
+   user's background preferences always win over recovery.
 
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31d7bec9b5cfb9c',t:'MTc4Nzg1ODk1Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+   The engine keeps browser Audio and Android Media3 separate.  Browser media
+   is watched for terminal/stall events and lack of progress.  Native Media3 is
+   watched through its own state/error events.  Every recovery is an explicit
+   engine retry (never a synthetic Play tap), with a capped backoff.
+   ---------------------------------------------------------------- */
+(function () {
+  'use strict';
+  if (window.__hifiStreamRecoveryV12857) return;
+  window.__hifiStreamRecoveryV12857 = true;
+
+  var engine = window.HifiRadioEngine;
+  if (!engine) return;
+
+  var retryTimer = 0;
+  var settleTimer = 0;
+  var stableTimer = 0;
+  var browserHealthTimer = 0;
+  var watchedAudio = null;
+  var intent = false;
+  var intentAt = 0;
+  var intendedStationKey = '';
+  var confirmedLive = false;
+  var hasPlayedThisIntent = false;
+  var nativeBuffering = false;
+  var bufferingAt = 0;
+  var lastBrowserProgress = 0;
+  var lastBrowserSignal = 0;
+  var lastRetryAt = 0;
+  var retryAttempt = 0;
+  var recovering = false;
+
+  var START_GRACE_MS = 28000;
+  var BROWSER_STALL_MS = 26000;
+  var NATIVE_BUFFER_MS = 28000;
+  var STABLE_LIVE_MS = 8000;
+  var RETRY_BACKOFF_MS = [1400, 3200, 7000, 14000, 28000, 30000];
+
+  function now() { return Date.now(); }
+  function nativePlayer() {
+    try {
+      var p = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.HifiRadio;
+      return p && typeof p.command === 'function' ? p : null;
+    } catch (_) { return null; }
+  }
+  function hasNative() { return !!nativePlayer(); }
+  function preferences() {
+    try {
+      var p = JSON.parse(localStorage.getItem('hifiUserSettings') || '{}');
+      return { background: p.background !== false, resume: p.resume !== false };
+    } catch (_) { return { background: true, resume: true }; }
+  }
+  function currentStation() {
+    try {
+      if (typeof stations === 'undefined' || !stations || !stations.length) return null;
+      var i = Math.max(0, Math.min(stations.length - 1, Number(currentIndex) || 0));
+      return stations[i] && stations[i].url ? stations[i] : null;
+    } catch (_) { return null; }
+  }
+  function stationKey(st) { return st && st.url ? String(st.url) : ''; }
+  function pinSheetIsOpen() {
+    try {
+      var sheet = document.getElementById('hifiPinSheet');
+      return !!(sheet && sheet.classList.contains('on'));
+    } catch (_) { return false; }
+  }
+  function stationIsLocked(st) {
+    try {
+      return !!(st && window.HifiParent && window.HifiParent.isLocked && window.HifiParent.isLocked(st.name, st.url));
+    } catch (_) { return false; }
+  }
+  function explicitlyPaused() {
+    try { return window.__hifiUserPaused === true; } catch (_) { return false; }
+  }
+  function browserAudio() {
+    try { return engine && typeof engine.getAudio === 'function' ? engine.getAudio() : null; }
+    catch (_) { return null; }
+  }
+  function browserLooksLive(a) {
+    if (!a || a.paused || a.ended) return false;
+    /* Standard media elements reach HAVE_CURRENT_DATA before they can really
+       play; the undefined branch keeps this tolerant of a lightweight bridge. */
+    try { return typeof a.readyState !== 'number' || a.readyState >= 2; } catch (_) { return true; }
+  }
+  function currentlyPlaying() {
+    var a = browserAudio();
+    if (browserLooksLive(a)) return true;
+    if (confirmedLive) return true;
+    try { return typeof isPlaying !== 'undefined' && isPlaying === true; } catch (_) { return false; }
+  }
+  function canRunInCurrentLifecycle() {
+    if (!document.hidden) return true;
+    /* Browser timers are not a reliable background transport.  Media3 may
+       continue in the background only when the user left both preferences on. */
+    if (!hasNative()) return false;
+    var p = preferences();
+    return p.background && p.resume;
+  }
+  function setIntent(reason, st, resetForStation) {
+    st = st || currentStation();
+    var key = stationKey(st);
+    if (!key) return;
+    var changed = resetForStation || !intent || (intendedStationKey && intendedStationKey !== key);
+    intent = true;
+    intentAt = now();
+    intendedStationKey = key;
+    try { window.__hifiPlaybackIntentV12857 = true; } catch (_) {}
+    if (changed) {
+      confirmedLive = false;
+      hasPlayedThisIntent = false;
+      nativeBuffering = false;
+      bufferingAt = 0;
+      lastBrowserProgress = 0;
+      lastBrowserSignal = 0;
+      retryAttempt = 0;
+    }
+  }
+  function clearIntent(reason) {
+    intent = false;
+    intentAt = 0;
+    intendedStationKey = '';
+    confirmedLive = false;
+    hasPlayedThisIntent = false;
+    nativeBuffering = false;
+    bufferingAt = 0;
+    recovering = false;
+    retryAttempt = 0;
+    clearTimeout(retryTimer); retryTimer = 0;
+    clearTimeout(settleTimer); settleTimer = 0;
+    clearTimeout(stableTimer); stableTimer = 0;
+    clearTimeout(browserHealthTimer); browserHealthTimer = 0;
+    try { window.__hifiPlaybackIntentV12857 = false; } catch (_) {}
+  }
+  function markLive(source) {
+    var st = currentStation();
+    if (!intent && st && !explicitlyPaused()) setIntent('observed-' + source, st, false);
+    if (!intent) return;
+    confirmedLive = true;
+    hasPlayedThisIntent = true;
+    nativeBuffering = false;
+    bufferingAt = 0;
+    recovering = false;
+    clearTimeout(retryTimer); retryTimer = 0;
+    clearTimeout(settleTimer); settleTimer = 0;
+    clearTimeout(stableTimer);
+    stableTimer = setTimeout(function () {
+      if (intent && confirmedLive && !explicitlyPaused()) retryAttempt = 0;
+    }, STABLE_LIVE_MS);
+  }
+  function nativePauseWasExplicit(event) {
+    if (!event) return false;
+    if (event.userPaused === true || event.userInitiated === true || event.byUser === true ||
+        event.manual === true || event.intentional === true || event.stoppedByUser === true) return true;
+    /* Media3 exposes playWhenReady=false for a deliberate notification/remote
+       pause, while a failed live item normally reaches ENDED/IDLE with its
+       play intent still set. Honour that explicit native signal when present. */
+    if (event.playWhenReady === false && !event.error && !/ended|idle|error/i.test(String(event.playbackState || event.state || ''))) return true;
+    var hint = [event.reason, event.cause, event.origin, event.source].filter(Boolean).join(' ').toLowerCase();
+    return /(?:\buser\b|manual|notification|media[ -]?button|explicit|remote-control)/.test(hint);
+  }
+  function shouldRecover(reason) {
+    if (!intent || explicitlyPaused() || pinSheetIsOpen() || !canRunInCurrentLifecycle()) return false;
+    var st = currentStation();
+    if (!st || !st.url) return false;
+    var a = browserAudio();
+    if (!hasNative() && a && !a.paused && !a.ended &&
+        !/browser-(?:stall|silence|error|ended|pause|abort)/.test(String(reason || ''))) return false;
+    if (hasNative() && confirmedLive && !/native-(?:stopped|error|buffer|timeout)/.test(String(reason || ''))) return false;
+    return true;
+  }
+  function scheduleRecovery(reason, minimumDelay) {
+    if (retryTimer || settleTimer || recovering || !shouldRecover(reason)) return;
+    var delay = RETRY_BACKOFF_MS[Math.min(retryAttempt, RETRY_BACKOFF_MS.length - 1)];
+    if (typeof minimumDelay === 'number') delay = Math.max(delay, minimumDelay);
+    /* Never issue two native selections in the same short event burst. */
+    delay = Math.max(delay, Math.max(0, lastRetryAt + 900 - now()));
+    retryTimer = setTimeout(function () {
+      retryTimer = 0;
+      performRecovery(reason);
+    }, delay);
+  }
+  function performRecovery(reason) {
+    if (!shouldRecover(reason)) return;
+    var st = currentStation();
+    if (!st) return;
+    recovering = true;
+    confirmedLive = false;
+    nativeBuffering = false;
+    bufferingAt = 0;
+    lastRetryAt = now();
+    retryAttempt = Math.min(retryAttempt + 1, RETRY_BACKOFF_MS.length - 1);
+    try { if (engine.prime) engine.prime(st); } catch (_) {}
+    try { window.__hifiUserPaused = false; } catch (_) {}
+    try {
+      /* `retry({silent:true})` keeps the user's manual retry toast behaviour,
+         while an automatic watchdog does not repeatedly cover the LCD. */
+      if (typeof engine.retry === 'function') engine.retry({ silent: true, reason: reason });
+      else if (typeof engine.select === 'function') engine.select(st);
+      else { recovering = false; scheduleRecovery('recovery-no-engine', 5000); return; }
+    } catch (_) {
+      recovering = false;
+      scheduleRecovery('recovery-throw', 5000);
+      return;
+    }
+    /* Engine.retry() replaces browser Audio synchronously. Attach immediately
+       so the fresh node's `playing` event is never missed between health ticks. */
+    if (!hasNative()) {
+      setTimeout(function () {
+        var renewed = browserAudio();
+        if (renewed) watchAudio(renewed);
+      }, 0);
+    }
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(function () {
+      settleTimer = 0;
+      recovering = false;
+      if (!confirmedLive) scheduleRecovery(hasNative() ? 'native-timeout' : 'browser-timeout', 0);
+    }, hasNative() ? 14500 : 20500);
+  }
+  function delayedBrowserFailure(el, reason, delay) {
+    setTimeout(function () {
+      if (browserAudio() !== el || explicitlyPaused()) return;
+      if (reason === 'browser-pause' && !el.paused) return;
+      if (reason === 'browser-stall' && !el.paused && now() - lastBrowserProgress < BROWSER_STALL_MS) return;
+      confirmedLive = false;
+      scheduleRecovery(reason, delay || 0);
+    }, delay || 0);
+  }
+  function armBrowserProgressWatch(el) {
+    clearTimeout(browserHealthTimer);
+    browserHealthTimer = setTimeout(function () {
+      browserHealthTimer = 0;
+      if (browserAudio() !== el || explicitlyPaused() || !browserLooksLive(el)) return;
+      if (now() - lastBrowserProgress < BROWSER_STALL_MS) {
+        armBrowserProgressWatch(el);
+        return;
+      }
+      confirmedLive = false;
+      scheduleRecovery('browser-silence', 0);
+    }, BROWSER_STALL_MS + 150);
+  }
+  function watchAudio(el) {
+    if (!el || el === watchedAudio) return;
+    watchedAudio = el;
+    lastBrowserSignal = now();
+    lastBrowserProgress = now();
+    function signal() {
+      if (browserAudio() !== el) return;
+      lastBrowserSignal = now();
+      lastBrowserProgress = now();
+      armBrowserProgressWatch(el);
+    }
+    el.addEventListener('play', signal, false);
+    el.addEventListener('playing', function () {
+      signal();
+      markLive('browser');
+    }, false);
+    el.addEventListener('canplay', signal, false);
+    el.addEventListener('canplaythrough', signal, false);
+    el.addEventListener('loadeddata', signal, false);
+    el.addEventListener('timeupdate', signal, false);
+    el.addEventListener('progress', signal, false);
+    el.addEventListener('waiting', function () {
+      if (browserAudio() !== el) return;
+      lastBrowserSignal = now();
+      delayedBrowserFailure(el, 'browser-stall', BROWSER_STALL_MS);
+    }, false);
+    el.addEventListener('stalled', function () {
+      if (browserAudio() !== el) return;
+      lastBrowserSignal = now();
+      delayedBrowserFailure(el, 'browser-stall', BROWSER_STALL_MS);
+    }, false);
+    el.addEventListener('error', function () { delayedBrowserFailure(el, 'browser-error', 500); }, false);
+    el.addEventListener('ended', function () { delayedBrowserFailure(el, 'browser-ended', 250); }, false);
+    el.addEventListener('abort', function () { delayedBrowserFailure(el, 'browser-abort', 750); }, false);
+    el.addEventListener('pause', function () { delayedBrowserFailure(el, 'browser-pause', 750); }, false);
+    /* A replacement Audio node can reach `playing` before the 2-second local
+       watcher gets a chance to attach listeners. Adopt that already-live node
+       so a successful automatic retry is not mistaken for another timeout. */
+    if (browserLooksLive(el)) markLive('browser-observed');
+    armBrowserProgressWatch(el);
+  }
+  function onNativeState(event) {
+    if (!event) return;
+    var st = currentStation();
+    if (st) {
+      try { if (engine.prime) engine.prime(st); } catch (_) {}
+    }
+    if (nativePauseWasExplicit(event)) {
+      clearIntent('native-explicit-pause');
+      return;
+    }
+    if (event.buffering) {
+      nativeBuffering = true;
+      if (!bufferingAt) bufferingAt = now();
+      return;
+    }
+    if (event.isPlaying === true) {
+      markLive('native');
+      return;
+    }
+    if (event.isPlaying === false) {
+      nativeBuffering = false;
+      bufferingAt = 0;
+      confirmedLive = false;
+      /* A state callback can report false during a newly accepted selection.
+         The engine's own 12-second connect timeout handles that start-up path;
+         after actual playback, or after the grace period, it is a real stop. */
+      if (intent && (hasPlayedThisIntent || now() - intentAt >= START_GRACE_MS)) {
+        scheduleRecovery('native-stopped', 0);
+      }
+    }
+  }
+  function onNativeError(event) {
+    confirmedLive = false;
+    nativeBuffering = false;
+    bufferingAt = 0;
+    /* Let the engine's first quick retry (2s) run first. */
+    scheduleRecovery('native-error', 4500);
+  }
+  function syncIntentFromCommand(event) {
+    var d = event && event.detail ? event.detail : {};
+    var type = d.type;
+    if (type === 'pause' || type === 'stop') {
+      clearIntent('command-' + type);
+      return;
+    }
+    if (type !== 'select' && type !== 'play') return;
+    var st = d.station || null;
+    if (!st && typeof d.index === 'number') {
+      try { st = stations[d.index]; } catch (_) {}
+    }
+    st = st || currentStation();
+    if (st && st.url) {
+      try { if (engine.prime) engine.prime(st); } catch (_) {}
+      /* A select comes from the app's already-guarded station flow.  For a
+         generic legacy play command, live playback itself is the final proof
+         of intent, which avoids turning a pending locked-PIN request into an
+         automatic restart. */
+      if (type === 'select') {
+        /* An unlocked station selection is direct; a locked selection is
+           adopted only through the guarded engine flow or a real live state. */
+        if (!stationIsLocked(st) || intent) setIntent('command-select', st, true);
+      } else if ((intent || !stationIsLocked(st)) && !pinSheetIsOpen()) {
+        setIntent('command-play', st, false);
+      }
+    }
+  }
+  function wrapIntentBoundaries() {
+    if (engine.__hifiRecoveryWrappedV12857) return;
+    engine.__hifiRecoveryWrappedV12857 = true;
+    var rawSelect = engine.select;
+    var rawPlay = engine.play;
+    var rawPause = engine.pause;
+    var rawStop = engine.stop;
+    var rawToggle = engine.toggle;
+    if (typeof rawSelect === 'function') {
+      engine.select = function (st) {
+        if (st && st.url) setIntent('engine-select', st, true);
+        return rawSelect.apply(this, arguments);
+      };
+    }
+    if (typeof rawPlay === 'function') {
+      engine.play = function () {
+        var st = currentStation();
+        /* Do not turn a pending locked-PIN request into a background retry.
+           Unlocked explicit Play may safely establish a reconnect intent. */
+        if (st && !stationIsLocked(st) && !pinSheetIsOpen()) setIntent('engine-play', st, false);
+        return rawPlay.apply(this, arguments);
+      };
+    }
+    if (typeof rawPause === 'function') {
+      engine.pause = function () {
+        clearIntent('engine-pause');
+        return rawPause.apply(this, arguments);
+      };
+    }
+    if (typeof rawStop === 'function') {
+      engine.stop = function () {
+        clearIntent('engine-stop');
+        return rawStop.apply(this, arguments);
+      };
+    }
+    if (typeof rawToggle === 'function') {
+      engine.toggle = function () {
+        /* The original toggle closes over its internal pause(), so track a
+           deliberate toggle-to-pause here without changing parent/PIN gates.
+           An unlocked toggle-to-play establishes intent; a locked one waits
+           for the parent module to complete its PIN gate first. */
+        if (currentlyPlaying()) clearIntent('engine-toggle-pause');
+        else {
+          var st = currentStation();
+          if (st && !stationIsLocked(st) && !pinSheetIsOpen()) setIntent('engine-toggle-play', st, false);
+        }
+        return rawToggle.apply(this, arguments);
+      };
+    }
+  }
+
+  wrapIntentBoundaries();
+  window.addEventListener('hifi-radio-command', syncIntentFromCommand, false);
+  window.addEventListener('hifi-radio-engine-unexpected-stop', function () {
+    confirmedLive = false;
+    if (intent && hasPlayedThisIntent) scheduleRecovery('native-stopped', 0);
+  }, false);
+  window.addEventListener('hifi-radio-engine-error', onNativeError, false);
+  window.addEventListener('hifi-radio-engine-live', function () { markLive('native-command'); }, false);
+
+  try {
+    var native = nativePlayer();
+    if (native && typeof native.addListener === 'function') {
+      native.addListener('state', onNativeState);
+      native.addListener('error', onNativeError);
+    }
+  } catch (_) {}
+
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) {
+      /* Do not alter app geometry on return; only reconsider a pending stream. */
+      if (intent && !explicitlyPaused() && (!confirmedLive || nativeBuffering)) {
+        setTimeout(function () {
+          if (nativeBuffering) scheduleRecovery('native-buffer', 0);
+          else if (!confirmedLive && (hasPlayedThisIntent || now() - intentAt >= START_GRACE_MS)) scheduleRecovery(hasNative() ? 'native-stopped' : 'browser-pause', 600);
+        }, 600);
+      }
+    }
+  }, false);
+  window.addEventListener('pageshow', function () {
+    if (intent && !confirmedLive && !explicitlyPaused()) scheduleRecovery(hasNative() ? 'native-stopped' : 'browser-pause', 800);
+  }, false);
+
+  /* A small, local watchdog.  It never patches global timers/RAF and never
+     emits resize or scroll events, so the approved viewport and tab geometry
+     remain owned by their existing controllers. */
+  setInterval(function () {
+    if (explicitlyPaused()) {
+      if (intent) clearIntent('paused-marker');
+      return;
+    }
+    var a = browserAudio();
+    if (!hasNative() && a) {
+      watchAudio(a);
+      if (browserLooksLive(a) && !confirmedLive) markLive('browser-watchdog');
+      if (intent && !recovering && !settleTimer) {
+        if (a.paused && hasPlayedThisIntent) scheduleRecovery('browser-pause', 0);
+        else if (!a.paused && now() - lastBrowserProgress >= BROWSER_STALL_MS) {
+          confirmedLive = false;
+          scheduleRecovery('browser-silence', 0);
+        }
+      }
+    }
+    if (hasNative() && intent && !recovering && !settleTimer) {
+      if (nativeBuffering && bufferingAt && now() - bufferingAt >= NATIVE_BUFFER_MS) {
+        confirmedLive = false;
+        scheduleRecovery('native-buffer', 0);
+      } else if (!confirmedLive && (hasPlayedThisIntent || now() - intentAt >= START_GRACE_MS)) {
+        try {
+          if (typeof isPlaying !== 'undefined' && isPlaying === false) scheduleRecovery('native-stopped', 0);
+        } catch (_) {}
+      }
+    }
+  }, 2000);
+})();
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31dec7d7b72b945',t:'MTc4Nzg2MzU2Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
