@@ -11233,30 +11233,17 @@ html[lang="ar"] #playerView .volume-shell>#volumeCounterSlot>#volumeValue{font-s
    four live pulsing L-corners, and a gently breathing frame. Pure CSS, GPU
    accelerated (transform, not top), so it is fast and smooth. Scan logic is
    unchanged — this only restyles the overlay. */
-.hifi-qrscan-frame{position:absolute;left:14%;top:14%;right:14%;bottom:14%;border:1.5px solid rgba(141,245,221,.55);border-radius:16px;box-shadow:0 0 0 9999px rgba(0,0,0,.42),inset 0 0 22px rgba(141,245,221,.12);animation:qrFrameBreath 2.6s ease-in-out infinite}
-@keyframes qrFrameBreath{0%,100%{border-color:rgba(141,245,221,.42);box-shadow:0 0 0 9999px rgba(0,0,0,.42),inset 0 0 16px rgba(141,245,221,.08)}50%{border-color:rgba(141,245,221,.78);box-shadow:0 0 0 9999px rgba(0,0,0,.42),inset 0 0 30px rgba(141,245,221,.22)}}
+/* v-scan-static — the overlay is now fully STATIC (no breathing/pulse/beam)
+   so the live camera preview stays smooth on real phones. Just a clean frame. */
+.hifi-qrscan-frame{position:absolute;left:14%;top:14%;right:14%;bottom:14%;border:1.5px solid rgba(141,245,221,.6);border-radius:16px;box-shadow:0 0 0 9999px rgba(0,0,0,.42),inset 0 0 22px rgba(141,245,221,.14)}
 .hifi-qrscan-corners{position:absolute;left:14%;top:14%;right:14%;bottom:14%;pointer-events:none}
-.hifi-qrscan-corners i{position:absolute;width:28px;height:28px;border-color:#ffe7a8;border-style:solid;filter:drop-shadow(0 0 5px rgba(255,231,168,.55));animation:qrCornerPulse 1.8s ease-in-out infinite}
+.hifi-qrscan-corners i{position:absolute;width:28px;height:28px;border-color:#ffe7a8;border-style:solid;filter:drop-shadow(0 0 5px rgba(255,231,168,.55))}
 .hifi-qrscan-corners i:nth-child(1){left:-2px;top:-2px;border-width:5px 0 0 5px;border-top-left-radius:14px;animation-delay:0s}
 .hifi-qrscan-corners i:nth-child(2){right:-2px;top:-2px;border-width:5px 5px 0 0;border-top-right-radius:14px;animation-delay:.45s}
 .hifi-qrscan-corners i:nth-child(3){left:-2px;bottom:-2px;border-width:0 0 5px 5px;border-bottom-left-radius:14px;animation-delay:1.35s}
 .hifi-qrscan-corners i:nth-child(4){right:-2px;bottom:-2px;border-width:0 5px 5px 0;border-bottom-right-radius:14px;animation-delay:.9s}
-@keyframes qrCornerPulse{0%,100%{opacity:.55;filter:drop-shadow(0 0 3px rgba(255,231,168,.35))}50%{opacity:1;filter:drop-shadow(0 0 9px rgba(255,231,168,.85))}}
-.hifi-qrscan-line{position:absolute;left:15%;right:15%;top:14%;height:22px;margin-top:-11px;border-radius:99px;pointer-events:none;
-  background:linear-gradient(180deg,transparent,rgba(56,189,248,.10) 30%,rgba(56,189,248,.45) 46%,#bfe9ff 50%,rgba(56,189,248,.45) 54%,rgba(56,189,248,.10) 70%,transparent);
-  box-shadow:0 0 18px rgba(56,189,248,.6),0 0 46px rgba(56,189,248,.32);
-  will-change:top,opacity;animation:qrScanBeam 1.6s cubic-bezier(.45,0,.55,1) infinite}
-.hifi-qrscan-line:after{content:'';position:absolute;left:6%;right:6%;top:50%;height:2px;margin-top:-1px;border-radius:99px;background:linear-gradient(90deg,transparent,#38bdf8 18%,#eaf7ff 50%,#38bdf8 82%,transparent);box-shadow:0 0 12px #38bdf8,0 0 20px rgba(56,189,248,.5)}
-@keyframes qrScanBeam{
-  0%{top:14%;opacity:0}
-  12%{opacity:1}
-  50%{top:86%;opacity:1}
-  88%{opacity:1}
-  100%{top:14%;opacity:0}
-}
-@media(prefers-reduced-motion:reduce){
-  .hifi-qrscan-frame,.hifi-qrscan-corners i,.hifi-qrscan-line{animation:none!important}
-}
+/* v-scan-static — moving scan beam removed entirely for a smooth preview. */
+.hifi-qrscan-line{display:none!important}
 .hifi-qrscan-status{margin-top:16px;font-size:13px;color:#c2e8f0;min-height:22px;line-height:1.6;padding:0 12px;font-weight:800;transition:color .2s}
 .hifi-qrscan-status.bad{color:#ff8fa0}
 .hifi-qrscan-status.ok{color:#8df5dd}
@@ -16103,5 +16090,5 @@ html body #volumeValue{font-variant-numeric:tabular-nums!important;letter-spacin
   window.addEventListener('focus', normaliseBridge);
 })();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a32406561a2dd835',t:'MTc4NzkyNzU0MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a32428ab3a3ad0b9',t:'MTc4NzkyODk0Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
