@@ -3585,6 +3585,8 @@ var g=document.getElementById('hifiGate');
        giving the feel of receiving a signal from afar. */
     .satellite-logo .sat-emoji .sat-mast,.satellite-logo .sat-emoji .sat-beacon{opacity:1}
     .satellite-logo .sat-emoji .sat-wg{opacity:0}
+/* v-thin-signal — only the signal wave arcs are thinned; the antenna mast keeps its full weight */
+.satellite-logo svg .sat-wg path{stroke-width:1.3!important}
     .satellite-logo:not(.sat-off) .sat-emoji .sat-beacon{animation:satBeacon 1.6s ease-in-out infinite!important}
     /* outer wave fires first, inner last -> signal travels toward the tower */
     .satellite-logo:not(.sat-off) .sat-emoji .sat-w3{animation:satWaveIn 1.8s ease-out 0s infinite!important}
@@ -7097,11 +7099,11 @@ document.head.appendChild(css);
         o.type = 'sine';
         o.frequency.value = 880;
         g.gain.setValueAtTime(0.0001, now + offset);
-        g.gain.linearRampToValueAtTime(0.16, now + offset + 0.012);
-        g.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.13);
+        g.gain.linearRampToValueAtTime(0.5, now + offset + 0.012);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.16);
         o.connect(g); g.connect(ctx.destination);
         o.start(now + offset);
-        o.stop(now + offset + 0.15);
+        o.stop(now + offset + 0.18);
       });
     } catch (_) {}
   }
@@ -11602,10 +11604,24 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
         try { return jsQR(img.data, w, h, { inversionAttempts: 'attemptBoth' }); } catch (e) { return null; }
       }
 
+      /* v-scan-throttle — decode at most ~8x/sec instead of every rAF frame.
+         The video keeps rendering at full framerate (its own compositor layer),
+         but the heavy jsQR work no longer floods the main thread, so the preview
+         stays smooth and the Close button responds instantly. The decode logic
+         (jsQR calls, decodePayload, import) below is completely unchanged. */
+      var lastScanTs = 0;
+      var SCAN_INTERVAL = 120;
+      /* v-scan-throttle — one reusable crop canvas instead of allocating a fresh
+         one every decode pass; cuts GC pressure and keeps the UI responsive. */
+      var cropCanvas = document.createElement('canvas');
+      var cctx = cropCanvas.getContext('2d');
       function tick() {
         if (closed) return;
         raf = requestAnimationFrame(tick);
         if (!video || video.readyState < 2 || !video.videoWidth) return;
+        var tnow = (window.performance && performance.now) ? performance.now() : Date.now();
+        if (tnow - lastScanTs < SCAN_INTERVAL) return;
+        lastScanTs = tnow;
         frames++;
 
         var vw = video.videoWidth, vh = video.videoHeight;
@@ -11635,9 +11651,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
           var cw = Math.max(2, Math.round(sCropW * cropScale));
           var ch = Math.max(2, Math.round(sCropH * cropScale));
           if (cw > 20 && ch > 20) {
-            var cropCanvas = document.createElement('canvas');
-            cropCanvas.width = cw; cropCanvas.height = ch;
-            var cctx = cropCanvas.getContext('2d');
+            if (cropCanvas.width !== cw || cropCanvas.height !== ch) { cropCanvas.width = cw; cropCanvas.height = ch; }
             if (cctx) {
               try {
                 cctx.drawImage(video, sCropX, sCropY, sCropW, sCropH, 0, 0, cw, ch);
@@ -16089,5 +16103,5 @@ html body #volumeValue{font-variant-numeric:tabular-nums!important;letter-spacin
   window.addEventListener('focus', normaliseBridge);
 })();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a323c949aeac271b',t:'MTc4NzkyNTAzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a32406561a2dd835',t:'MTc4NzkyNzU0MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
