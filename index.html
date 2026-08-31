@@ -2894,7 +2894,7 @@ html[data-hifi-texture="mint"] .hifi-texture-surface{opacity:1;background-color:
                 <p dir="ltr"><b class="t">User data.</b> Stations added or imported manually by the user, together with settings, favorites and the lock PIN, are stored exclusively in the local storage of the device. The application transmits no data to any external server, and a backup file is produced only when the user explicitly requests one.</p>
                 <p><b class="t">مسئولیت کاربر و رویهٔ رسیدگی.</b> کاربر موظف است تنها به جریان‌هایی گوش دهد که استفاده از آن‌ها در قلمرو قضایی وی مجاز است. صاحبان حقوق می‌توانند برای اصلاح اطلاعات، افزودن مجوز یا درخواست حذف یک ایستگاه با ما مکاتبه کنند؛ درخواست‌های مستند در کوتاه‌ترین زمان ممکن بررسی و اعمال می‌شوند.</p>
                 <p dir="ltr"><b class="t">User responsibility and takedown procedure.</b> Users must only access streams whose use is lawful in their own jurisdiction. Rights holders may contact us to correct information, register a licence, or request the removal of a station; substantiated requests are reviewed and applied as promptly as possible.</p>
-                <div class="hfa-contact"><span>پشتیبانی و تماس حقوقی · Support &amp; legal contact:</span><a href="/cdn-cgi/l/email-protection#9bf3f2f9f2b5e9fafff2f4e8eeebebf4e9efdbfcf6faf2f7b5f8f4f6" id="hfaSupportEmail"><code style="direction:ltr"><span class="__cf_email__" data-cfemail="a9c1c0cbc087dbc8cdc0c6dadcd9d9c6dbdde9cec4c8c0c587cac6c4">[email&#160;protected]</span></code></a></div>
+                <div class="hfa-contact"><span>پشتیبانی و تماس حقوقی · Support &amp; legal contact:</span><a href="/cdn-cgi/l/email-protection#224a4b444b0c5043464b4d0c515752524d505662454f434b4e0c414d4f" id="hfaSupportEmail"><code style="direction:ltr"><span class="__cf_email__" data-cfemail="82eaebe4ebacf0e3e6ebedacf1f7f2f2edf0f6c2e5efe3ebeeace1edef">[email&#160;protected]</span></code></a></div>
               </div>
 
               <div class="hfa-rule"></div>
@@ -6659,20 +6659,24 @@ var qrcode = function() {
     var title = "HiFi Radio — " + (st.name || "Station");
     var hint = "ایستگاه «" + (st.name || "") + "» — برای افزودن، در اپ HiFi Radio از تب ایستگاه‌ها > «افزودن رادیو» فایل یا QR را باز کن.";
 
-    // last rung: download both files so the user can forward them manually
-    function downloadBoth(){
-      saveBlob(qrBlob, base + "-qr.png");
-      setTimeout(function(){ saveBlob(new Blob([payload], { type: "text/plain" }), base + ".txt"); }, 350);
-      toast("فایل‌های اشتراک دانلود شد");
+    // last rung: system share is blocked/absent (embedded iframe, WebView,
+    // desktop) → open the app's OWN QR sheet — usable everywhere — and drop
+    // the .txt payload next to it so the user can forward it manually.
+    function fallbackSheet(){
+      toast("پنل اشتراک باز نشد — از QR یا فایل استفاده کن");
+      window.HiFiQr.showModal(st);        // QR + "save image" + "copy link"
+      setTimeout(function(){
+        saveBlob(new Blob([payload], { type: "text/plain" }), base + ".txt");
+      }, 500);
     }
     // middle rung: file-share unavailable/failed → the station still goes out
     // as text (name + stream URL can be entered manually in "Add Station")
     function shareText(){
-      if (!navigator.share){ downloadBoth(); return; }
+      if (!navigator.share){ fallbackSheet(); return; }
       navigator.share({ title: title, text: hint + "\n" + st.url })
         .then(function(){}, function(err){
           if (err && err.name === "AbortError") return;   // user cancelled — stay silent
-          downloadBoth();
+          fallbackSheet();
         });
     }
 
@@ -9802,5 +9806,5 @@ publishApi();
 })();
 </script>
   
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a33becbaa939992f',t:'MTc4ODE3ODE0OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a33e13629b07dc86',t:'MTc4ODIwMDcwNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a33e5e0a0d6edbf8',t:'MTc4ODIwMzc2Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
