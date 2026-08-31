@@ -6656,23 +6656,44 @@ var qrcode = function() {
     var qrBlob  = dataUrlToBlob(qrUri);
     if (!payload || !qrBlob) { toast("اشتراک‌گذاری ممکن نشد"); return; }
     var base = safeFileName(st.name);
+    var title = "HiFi Radio — " + (st.name || "Station");
     var hint = "ایستگاه «" + (st.name || "") + "» — برای افزودن، در اپ HiFi Radio از تب ایستگاه‌ها > «افزودن رادیو» فایل یا QR را باز کن.";
+
+    // last rung: download both files so the user can forward them manually
+    function downloadBoth(){
+      saveBlob(qrBlob, base + "-qr.png");
+      setTimeout(function(){ saveBlob(new Blob([payload], { type: "text/plain" }), base + ".txt"); }, 350);
+      toast("فایل‌های اشتراک دانلود شد");
+    }
+    // middle rung: file-share unavailable/failed → the station still goes out
+    // as text (name + stream URL can be entered manually in "Add Station")
+    function shareText(){
+      if (!navigator.share){ downloadBoth(); return; }
+      navigator.share({ title: title, text: hint + "\n" + st.url })
+        .then(function(){}, function(err){
+          if (err && err.name === "AbortError") return;   // user cancelled — stay silent
+          downloadBoth();
+        });
+    }
+
     try {
+      // NOTE: share-safe extensions only (png / txt) — an unknown one like
+      // ".hfr" makes Chrome reject the WHOLE share call, PNG included.
       var files = [
         new File([qrBlob], base + "-qr.png", { type: "image/png" }),
-        new File([payload], base + ".hfr", { type: "text/plain" })
+        new File([payload], base + ".txt", { type: "text/plain" })
       ];
       if (navigator.canShare && navigator.canShare({ files: files })){
-        navigator.share({ files: files, title: "HiFi Radio — " + (st.name || "Station"), text: hint }).catch(function(){});
+        navigator.share({ files: files, title: title, text: hint })
+          .then(function(){}, function(err){
+            if (err && err.name === "AbortError") return;   // user cancelled — stay silent
+            shareText();                                     // real rejection → cascade down
+          });
       } else {
-        // no file-share support → download so the user can forward them manually
-        saveBlob(qrBlob, base + "-qr.png");
-        setTimeout(function(){ saveBlob(new Blob([payload], { type: "text/plain" }), base + ".hfr"); }, 350);
-        toast("فایل‌های اشتراک دانلود شد");
+        shareText();
       }
     } catch(e) {
-      saveBlob(qrBlob, base + "-qr.png");
-      toast("تصویر QR دانلود شد");
+      shareText();
     }
     close();
   }
@@ -9781,5 +9802,5 @@ publishApi();
 })();
 </script>
   
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a33becbaa939992f',t:'MTc4ODE3ODE0OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a33c88e3d8750b13',t:'MTc4ODE4NDU0NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a33becbaa939992f',t:'MTc4ODE3ODE0OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a33e13629b07dc86',t:'MTc4ODIwMDcwNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
