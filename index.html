@@ -1309,7 +1309,7 @@ html[data-hifi-texture="mint"] .hifi-texture-surface{opacity:1;background-color:
    background so the list rows don't bleed through, plus a hairline
    shadow at the bottom edge. */
 .fav-actions{
-  display:grid; grid-template-columns:1fr; gap:7px;
+  display:grid; grid-template-columns:1fr 1fr; gap:7px;
   margin:0 0 10px;
   position:sticky;
   /* sit just under the .view-head title (which is ~58px tall incl. its
@@ -1321,6 +1321,14 @@ html[data-hifi-texture="mint"] .hifi-texture-surface{opacity:1;background-color:
   -webkit-backdrop-filter:blur(8px);
   backdrop-filter:blur(8px);
   box-shadow:0 4px 10px -6px rgba(0,0,0,.6);
+}
+/* clear-all button: quiet red tint; while "armed" (waiting for the second
+   confirm tap) it glows so the user can see it changed state */
+.fav-actions .st-act-danger svg{ color:#ff8b8b; }
+.fav-actions .st-act-danger b{ color:#ffb3b3; }
+.fav-actions .st-act-danger.armed{
+  border-color:#ff8b8b;
+  background:linear-gradient(145deg, rgba(255,110,110,.16), rgba(28,12,18,.45));
 }
 /* "New" dot on freshly-added favorites (last 24h, OR until the user taps
    to dismiss it). Sits in the top-left of the row, well clear of the heart
@@ -2681,6 +2689,11 @@ html[data-hifi-texture="mint"] .hifi-texture-surface{opacity:1;background-color:
           <button class="st-act st-act-sort" id="favSortBtn" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M4 12h7M4 18h4"/><path d="m17 14 3 3 3-3M20 5v12"/></svg>
             <span class="st-act-copy"><b id="favSortLabel">Default</b><small>مرتب‌سازی</small></span>
+          </button>
+          <!-- wipe every favorite — asks for a second tap before acting -->
+          <button class="st-act st-act-sort st-act-danger" id="favClearBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M10 11v6M14 11v6"/><path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>
+            <span class="st-act-copy"><b id="favClearLabel">پاک‌کردن همه</b><small>Clear all</small></span>
           </button>
         </div>
         <!-- scrollable region: empty state + the list of favorites.
@@ -6387,6 +6400,27 @@ var qrcode = function() {
     return favNames.map(resolveByName);
   }
 
+  /* drop favorites that can no longer be resolved to a playable stream —
+     orphans left behind by older broken builds. returns how many were removed */
+  function purgeBrokenFavorites(){
+    var keep = favNames.filter(function(n){ var st = resolveByName(n); return !!(st && st.url); });
+    var removed = favNames.length - keep.length;
+    if (removed > 0){
+      favNames = keep;
+      saveFavNames(favNames);
+      emit();
+    }
+    return removed;
+  }
+
+  /* wipe every favorite (the user-confirmed "clear all" button) */
+  function clearFavorites(){
+    favNames = [];
+    saveFavNames(favNames);
+    try { localStorage.removeItem("hifiFavAddedAtV1"); } catch(e){}
+    emit();
+  }
+
   /* ---- recents ---------------------------------------------------------- */
   function pushRecent(st){
     if (!st || !st.name) return;
@@ -6431,7 +6465,9 @@ var qrcode = function() {
     recents: function(){ return recents.slice(); },
     custom: function(){ return custom.slice(); },
     addCustom: addCustom,
-    removeCustom: removeCustom
+    removeCustom: removeCustom,
+    purgeBrokenFavorites: purgeBrokenFavorites,
+    clearFavorites: clearFavorites
   };
 })();
 </script>
@@ -8471,7 +8507,10 @@ publishApi();
           : (flag
               ? '<span class="st-row-flag">' + flag + '</span>'
               : '<svg class="ic-radio" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m17 3-9 5.5"/><rect x="3" y="8" width="18" height="12" rx="3"/><circle cx="16.5" cy="14" r="2.6"/><path d="M6.5 12.5v3"/></svg>'));
-    return '<div class="st-row' + (playingThis ? " playing" : "") + '" data-url="' + esc(st.url) + '">' +
+    // every row gets a stable key: the stream url when there is one, else the
+    // favorite's name — so taps target the right row even for unplayable
+    // "ghost" favorites that all share an empty url.
+    return '<div class="st-row' + (playingThis ? " playing" : "") + '" data-url="' + esc(st.url) + '" data-key="' + esc(st.url || ("name:" + st.name)) + '">' +
       '<span class="st-row-lead" aria-hidden="true">' +
         leadIcon +
         '<span class="st-bars"><i></i><i></i><i></i></span>' +
@@ -8825,9 +8864,12 @@ publishApi();
   function bindListClicks(container){
     container.addEventListener("click", function(e){
       var row = e.target.closest(".st-row"); if (!row) return;
-      var url = row.getAttribute("data-url");
+      // match by the row's stable key (url, or "name:<name>") — never by url
+      // alone, because unresolved ghost favorites all share an empty url and
+      // would otherwise all point at the FIRST stub.
+      var key = row.getAttribute("data-key");
       var list = (container === elList) ? lastRendered : favRendered;
-      var st = list.filter(function(s){ return s.url === url; })[0];
+      var st = list.filter(function(s){ return (s.url || ("name:" + s.name)) === key; })[0];
       if (!st) return;
 
       if (e.target.closest(".st-row-fav")){
@@ -8838,6 +8880,9 @@ publishApi();
         openRowMenu(e.target.closest(".st-row-more"), st);
         return;
       }
+      // a row with no stream url can't be played — say so instead of failing
+      // silently (ghost favorites: the user should remove them via the heart).
+      if (!st.url){ showToast && showToast("این مورد قابل پخش نیست — با قلب حذفش کن"); return; }
       // otherwise: clicking anywhere on the row plays it AND makes the whole
       // visible group the play queue, then jumps to the Radio tab so prev/next
       // walk through that group (faithful to the original behaviour).
@@ -9264,9 +9309,9 @@ publishApi();
       e.preventDefault(); e.stopPropagation();
       var row = dot.closest(".st-row");
       if (!row) return;
-      // find the station by data-url on the row
-      var url = row.getAttribute("data-url");
-      var st = favRendered.filter(function(s){ return s.url === url; })[0];
+      // find the station by the row's stable key (url, or "name:<name>")
+      var key = row.getAttribute("data-key");
+      var st = favRendered.filter(function(s){ return (s.url || ("name:" + s.name)) === key; })[0];
       if (st && st.name){ dismissNewBadge(st.name); }
       // remove the dot + the .is-new class — no full re-render needed
       dot.remove();
@@ -9798,6 +9843,40 @@ publishApi();
     }
   })();
   reflectCockpitFav();
+
+  /* ---- Favorites: clear-all, with a two-tap inline confirm -------------- */
+  var elFavClearBtn = document.getElementById("favClearBtn");
+  var elFavClearLbl = document.getElementById("favClearLabel");
+  var favClearTimer = 0;
+  function disarmFavClear(){
+    clearTimeout(favClearTimer);
+    if (elFavClearBtn) elFavClearBtn.classList.remove("armed");
+    if (elFavClearLbl) elFavClearLbl.textContent = "پاک‌کردن همه";
+  }
+  if (elFavClearBtn) elFavClearBtn.addEventListener("click", function(e){
+    e.stopPropagation();
+    if (!elFavClearBtn.classList.contains("armed")){
+      // first tap: arm it for a few seconds, then it forgets
+      elFavClearBtn.classList.add("armed");
+      if (elFavClearLbl) elFavClearLbl.textContent = "مطمئنی؟ دوباره بزن";
+      favClearTimer = setTimeout(disarmFavClear, 4000);
+      return;
+    }
+    disarmFavClear();
+    if (window.HiFiLibrary && window.HiFiLibrary.clearFavorites) window.HiFiLibrary.clearFavorites();
+    try { localStorage.removeItem("hifiFavCustomOrderV1"); } catch(err){}
+    showToast && showToast("همه‌ی علاقه‌مندی‌ها پاک شد");
+    renderFavorites();
+  });
+
+  /* ---- boot hygiene: silently drop unplayable ghost favorites that older
+     broken builds left behind, and tell the user what was cleaned ---------- */
+  if (window.HiFiLibrary && window.HiFiLibrary.purgeBrokenFavorites){
+    var purged = window.HiFiLibrary.purgeBrokenFavorites();
+    if (purged > 0 && showToast){
+      showToast(String(purged).replace(/\d/g, function(d){ return "۰۱۲۳۴۵۶۷۸۹"[+d]; }) + " مورد خراب از علاقه‌مندی‌ها پاک شد");
+    }
+  }
 
   /* ---- initial paint ---------------------------------------------------- */
   syncTabs();
