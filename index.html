@@ -797,7 +797,7 @@ body.hifi-locked #volFillBar{
   padding:16px 16px 18px;
   border-radius:24px;                       /* centered card — all corners round */
   border:1.5px solid var(--gold);
-  background:linear-gradient(160deg, #14384a, #081a28);
+  background:linear-gradient(160deg, #2b1650, #0c0620);
   box-shadow:0 24px 64px rgba(0,0,0,.58), inset 0 1px 0 rgba(255,255,255,.08);
   transform:translateY(14px) scale(.96);
   opacity:0;
@@ -817,25 +817,25 @@ body.hifi-locked #volFillBar{
   padding:11px 12px; margin-top:8px;
   border-radius:14px;
   border:1px solid var(--line);
-  background:linear-gradient(145deg, rgba(65,107,129,.55), rgba(19,46,62,.7));
+  background:linear-gradient(145deg, rgba(90,55,160,.5), rgba(24,12,52,.7));
   color:var(--text);
   font-family:inherit;
   text-align:right;
   transition:border-color .18s ease, transform .1s ease, background .18s ease;
 }
 .sheet-choice:active{ transform:scale(.98); }
-.sheet-choice.on{ border-color:var(--gold); background:linear-gradient(145deg, rgba(232,196,107,.16), rgba(19,46,62,.7)); }
+.sheet-choice.on{ border-color:var(--gold); background:linear-gradient(145deg, rgba(255,209,102,.16), rgba(24,12,52,.7)); }
 .sheet-choice .sc-ic{
   flex:0 0 auto;
   width:38px; height:38px;
   display:flex; align-items:center; justify-content:center;
   border-radius:11px;
-  background:rgba(9,20,31,.55);
+  background:rgba(15,8,32,.55);
   border:1px solid var(--line);
   color:var(--accent);
 }
 .sheet-choice .sc-ic svg{ width:20px; height:20px; }
-.sheet-choice.on .sc-ic{ color:var(--gold); border-color:rgba(232,196,107,.4); }
+.sheet-choice.on .sc-ic{ color:var(--gold); border-color:rgba(255,209,102,.4); }
 .sheet-choice .sc-copy{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px; }
 .sheet-choice .sc-copy b{ font-size:13px; font-weight:700; }
 .sheet-choice .sc-copy small{ font-size:10px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -1306,8 +1306,16 @@ html[data-hifi-texture="bubbles"] .hifi-texture-surface{opacity:1;background-col
 html[data-hifi-texture="diamond"] .hifi-texture-surface{opacity:.92;background-color:#0b0718;background-image:repeating-linear-gradient(45deg,transparent 0 26px,rgba(180,140,255,.09) 26px 27px),repeating-linear-gradient(-45deg,transparent 0 26px,rgba(180,140,255,.09) 26px 27px),radial-gradient(ellipse at 50% 45%,rgba(176,108,255,.09),transparent 55%)}
 html[data-hifi-texture="threads"] .hifi-texture-surface{opacity:1;background-color:#090516;background-image:radial-gradient(circle at 80% 15%,rgba(255,209,102,.06),transparent 40%),url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTMwIiB2aWV3Qm94PSIwIDAgMTgwIDEzMCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj48cGF0aCBkPSJNLTUgMjAgQyA0MCA2MCwgODAgLTEwLCAxODUgNDAiIHN0cm9rZT0iI2ZmZDE2NiIgc3Ryb2tlLXdpZHRoPSIxLjYiIG9wYWNpdHk9Ii4zMCIvPjxwYXRoIGQ9Ik0tNSA3MCBDIDUwIDMwLCAxMTAgMTEwLCAxODUgNjAiIHN0cm9rZT0iI2IwNmNmZiIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIuMzIiLz48cGF0aCBkPSJNLTUgMTEwIEMgNjAgODQsIDEyMCAxMjgsIDE4NSA5NiIgc3Ryb2tlPSIjNTVkZmZmIiBzdHJva2Utd2lkdGg9IjEuNCIgb3BhY2l0eT0iLjI0Ii8+PHBhdGggZD0iTS01IDQ2IEMgNzAgOTIsIDkwIDIyLCAxODUgODgiIHN0cm9rZT0iI2ZmNmJjNyIgc3Ryb2tlLXdpZHRoPSIxLjIiIG9wYWNpdHk9Ii4yMiIvPjwvZz48L3N2Zz4=")}
 html[data-hifi-texture="plush"] .hifi-texture-surface{opacity:.92;background-color:#0c0716;background-image:radial-gradient(ellipse at 25% 30%,rgba(216,190,255,.10) 0 .7px,rgba(0,0,0,.28) 1px 1.5px,transparent 2px),radial-gradient(ellipse at 75% 65%,rgba(0,0,0,.32) 0 .8px,rgba(216,190,255,.07) 1.1px 1.7px,transparent 2.2px);background-size:9px 7px,12px 10px}
+html[data-hifi-texture="lava"] .hifi-texture-surface{opacity:1;background-color:#170507;background-image:radial-gradient(ellipse at 50% 115%,rgba(255,64,64,.20) 0 30%,transparent 58%),radial-gradient(circle at 18% 25%,rgba(255,120,80,.08),transparent 40%),radial-gradient(circle at 84% 70%,rgba(180,20,40,.10),transparent 42%),url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTMwIiB2aWV3Qm94PSIwIDAgMTgwIDEzMCI+PGcgZm9udC1mYW1pbHk9InNlcmlmIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjZmY1YTRkIiBvcGFjaXR5PSIuMjAiPjx0ZXh0IHg9IjE2IiB5PSIzNiIgZm9udC1zaXplPSIxMyI+4pymPC90ZXh0Pjx0ZXh0IHg9IjcwIiB5PSIyMCIgZm9udC1zaXplPSI5IiBmaWxsPSIjZmY4YTVjIj7inKY8L3RleHQ+PHRleHQgeD0iMTMwIiB5PSI1MiIgZm9udC1zaXplPSIxMSI+4pymPC90ZXh0Pjx0ZXh0IHg9IjQyIiB5PSI5NiIgZm9udC1zaXplPSI4IiBmaWxsPSIjZmZiMDhhIj7inKY8L3RleHQ+PHRleHQgeD0iMTE4IiB5PSIxMDgiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiNmZjZiNWMiPuKcpjwvdGV4dD48L2c+PC9zdmc+")}
+html[data-hifi-texture="ember"] .hifi-texture-surface{opacity:.96;background-color:#190b04;background-image:radial-gradient(ellipse at 22% 18%,rgba(255,150,40,.14),transparent 46%),radial-gradient(ellipse at 80% 80%,rgba(255,96,20,.12),transparent 45%),linear-gradient(180deg,transparent 70%,rgba(255,190,90,.06) 100%)}
+html[data-hifi-texture="jade"] .hifi-texture-surface{opacity:.96;background-color:#04140e;background-image:radial-gradient(ellipse at 20% 22%,rgba(46,230,140,.12),transparent 46%),radial-gradient(ellipse at 82% 78%,rgba(20,180,120,.10),transparent 45%),radial-gradient(ellipse at 50% 110%,rgba(120,255,200,.07) 0 26%,transparent 50%)}
+html[data-hifi-texture="carbide"] .hifi-texture-surface{opacity:.94;background-color:#060d1c;background-image:radial-gradient(ellipse at 78% 16%,rgba(70,150,255,.13),transparent 44%),radial-gradient(ellipse at 16% 82%,rgba(40,110,230,.10),transparent 44%),repeating-linear-gradient(90deg,transparent 0 30px,rgba(120,180,255,.05) 30px 31px),repeating-linear-gradient(0deg,transparent 0 30px,rgba(120,180,255,.04) 30px 31px)}
+html[data-hifi-texture="lagoon"] .hifi-texture-surface{opacity:.96;background-color:#041418;background-image:radial-gradient(ellipse at 24% 20%,rgba(60,230,220,.12),transparent 46%),radial-gradient(ellipse at 80% 74%,rgba(30,190,200,.10),transparent 44%),linear-gradient(115deg,transparent 60%,rgba(160,255,250,.05) 82%,transparent 100%)}
+html[data-hifi-texture="rose"] .hifi-texture-surface{opacity:1;background-color:#170912;background-image:radial-gradient(circle at 76% 20%,rgba(255,130,200,.10),transparent 44%),radial-gradient(circle at 20% 80%,rgba(255,100,170,.08),transparent 42%),url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTMwIiB2aWV3Qm94PSIwIDAgMTgwIDEzMCI+PGcgZm9udC1mYW1pbHk9InNlcmlmIiBmb250LXdlaWdodD0iNzAwIj48dGV4dCB4PSIxOCIgeT0iNDAiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNmZjllY2YiIG9wYWNpdHk9Ii4yNiI+4pmlPC90ZXh0Pjx0ZXh0IHg9Ijc4IiB5PSIyNiIgZm9udC1zaXplPSIxNSIgZmlsbD0iI2ZmYzRlNSIgb3BhY2l0eT0iLjI0Ij7imaU8L3RleHQ+PHRleHQgeD0iMTM2IiB5PSI1NiIgZm9udC1zaXplPSIxOSIgZmlsbD0iI2ZmN2ZiZiIgb3BhY2l0eT0iLjIyIj7imaU8L3RleHQ+PHRleHQgeD0iNDQiIHk9IjEwMCIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2ZmOWVjZiIgb3BhY2l0eT0iLjIyIj7imaU8L3RleHQ+PHRleHQgeD0iMTEwIiB5PSIxMTAiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiNmZmIzZGMiIG9wYWNpdHk9Ii4yMCI+4pmlPC90ZXh0PjwvZz48L3N2Zz4=")}
+html[data-hifi-texture="royal"] .hifi-texture-surface{opacity:.94;background-color:#131005;background-image:repeating-linear-gradient(45deg,transparent 0 18px,rgba(255,209,102,.06) 18px 19px),repeating-linear-gradient(-45deg,transparent 0 18px,rgba(255,209,102,.05) 18px 19px),radial-gradient(ellipse at 50% 0%,rgba(255,224,150,.10),transparent 45%)}
+html[data-hifi-texture="mono"] .hifi-texture-surface{opacity:.93;background-color:#0b0c0e;background-image:repeating-linear-gradient(90deg,transparent 0 26px,rgba(255,255,255,.045) 26px 27px),repeating-linear-gradient(0deg,transparent 0 26px,rgba(255,255,255,.035) 26px 27px),radial-gradient(ellipse at 70% 12%,rgba(255,255,255,.06),transparent 40%)}
 
-/* ---- picker previews (each surface, scoped to its swatch) — round 14 set ---- */
+/* ---- picker previews (each surface, scoped to its swatch) — round 14/15 set ---- */
 .tex-swatch[data-tex="none"]{background-color:#0d0a1c;background-image:none;opacity:1}
 .tex-swatch[data-tex="galaxy"]{background-color:#0a0618;background-image:radial-gradient(circle at 30% 20%,#b06cff55,transparent 40%),radial-gradient(circle at 78% 68%,#6c8cff4d,transparent 44%),radial-gradient(circle at 60% 40%,rgba(255,255,255,.5) 0 .6px,transparent 1px),radial-gradient(circle at 18% 62%,rgba(255,255,255,.4) 0 .5px,transparent .9px),radial-gradient(circle at 88% 22%,rgba(255,255,255,.45) 0 .5px,transparent .9px),linear-gradient(150deg,#0f0824,#170a38 55%,#0a0618);background-size:auto,auto,140px 140px,90px 90px,120px 120px,auto;opacity:1}
 .tex-swatch[data-tex="sand"]{background-color:#0a1b25;background-image:radial-gradient(circle,rgba(255,255,255,.16) 0 .5px,rgba(0,0,0,.34) .7px 1.05px,transparent 1.35px),radial-gradient(circle,rgba(0,0,0,.38) 0 .45px,transparent .85px);background-size:4px 4px,7px 6px;background-position:0 0,2px 1px;opacity:1}
@@ -1326,6 +1334,14 @@ html[data-hifi-texture="plush"] .hifi-texture-surface{opacity:.92;background-col
 .tex-swatch[data-tex="diamond"]{background-color:#0b0718;background-image:repeating-linear-gradient(45deg,transparent 0 26px,rgba(180,140,255,.09) 26px 27px),repeating-linear-gradient(-45deg,transparent 0 26px,rgba(180,140,255,.09) 26px 27px),radial-gradient(ellipse at 50% 45%,rgba(176,108,255,.09),transparent 55%);opacity:1}
 .tex-swatch[data-tex="threads"]{background-color:#090516;background-image:radial-gradient(circle at 80% 15%,rgba(255,209,102,.06),transparent 40%),url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTMwIiB2aWV3Qm94PSIwIDAgMTgwIDEzMCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj48cGF0aCBkPSJNLTUgMjAgQyA0MCA2MCwgODAgLTEwLCAxODUgNDAiIHN0cm9rZT0iI2ZmZDE2NiIgc3Ryb2tlLXdpZHRoPSIxLjYiIG9wYWNpdHk9Ii4zMCIvPjxwYXRoIGQ9Ik0tNSA3MCBDIDUwIDMwLCAxMTAgMTEwLCAxODUgNjAiIHN0cm9rZT0iI2IwNmNmZiIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIuMzIiLz48cGF0aCBkPSJNLTUgMTEwIEMgNjAgODQsIDEyMCAxMjgsIDE4NSA5NiIgc3Ryb2tlPSIjNTVkZmZmIiBzdHJva2Utd2lkdGg9IjEuNCIgb3BhY2l0eT0iLjI0Ii8+PHBhdGggZD0iTS01IDQ2IEMgNzAgOTIsIDkwIDIyLCAxODUgODgiIHN0cm9rZT0iI2ZmNmJjNyIgc3Ryb2tlLXdpZHRoPSIxLjIiIG9wYWNpdHk9Ii4yMiIvPjwvZz48L3N2Zz4=");opacity:1}
 .tex-swatch[data-tex="plush"]{background-color:#0c0716;background-image:radial-gradient(ellipse at 25% 30%,rgba(216,190,255,.10) 0 .7px,rgba(0,0,0,.28) 1px 1.5px,transparent 2px),radial-gradient(ellipse at 75% 65%,rgba(0,0,0,.32) 0 .8px,rgba(216,190,255,.07) 1.1px 1.7px,transparent 2.2px);background-size:9px 7px,12px 10px;opacity:1}
+.tex-swatch[data-tex="lava"]{background-color:#170507;background-image:radial-gradient(ellipse at 50% 115%,rgba(255,64,64,.20) 0 30%,transparent 58%),radial-gradient(circle at 18% 25%,rgba(255,120,80,.08),transparent 40%),radial-gradient(circle at 84% 70%,rgba(180,20,40,.10),transparent 42%),url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTMwIiB2aWV3Qm94PSIwIDAgMTgwIDEzMCI+PGcgZm9udC1mYW1pbHk9InNlcmlmIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjZmY1YTRkIiBvcGFjaXR5PSIuMjAiPjx0ZXh0IHg9IjE2IiB5PSIzNiIgZm9udC1zaXplPSIxMyI+4pymPC90ZXh0Pjx0ZXh0IHg9IjcwIiB5PSIyMCIgZm9udC1zaXplPSI5IiBmaWxsPSIjZmY4YTVjIj7inKY8L3RleHQ+PHRleHQgeD0iMTMwIiB5PSI1MiIgZm9udC1zaXplPSIxMSI+4pymPC90ZXh0Pjx0ZXh0IHg9IjQyIiB5PSI5NiIgZm9udC1zaXplPSI4IiBmaWxsPSIjZmZiMDhhIj7inKY8L3RleHQ+PHRleHQgeD0iMTE4IiB5PSIxMDgiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiNmZjZiNWMiPuKcpjwvdGV4dD48L2c+PC9zdmc+");opacity:1}
+.tex-swatch[data-tex="ember"]{background-color:#190b04;background-image:radial-gradient(ellipse at 22% 18%,rgba(255,150,40,.14),transparent 46%),radial-gradient(ellipse at 80% 80%,rgba(255,96,20,.12),transparent 45%),linear-gradient(180deg,transparent 70%,rgba(255,190,90,.06) 100%);opacity:1}
+.tex-swatch[data-tex="jade"]{background-color:#04140e;background-image:radial-gradient(ellipse at 20% 22%,rgba(46,230,140,.12),transparent 46%),radial-gradient(ellipse at 82% 78%,rgba(20,180,120,.10),transparent 45%),radial-gradient(ellipse at 50% 110%,rgba(120,255,200,.07) 0 26%,transparent 50%);opacity:1}
+.tex-swatch[data-tex="carbide"]{background-color:#060d1c;background-image:radial-gradient(ellipse at 78% 16%,rgba(70,150,255,.13),transparent 44%),radial-gradient(ellipse at 16% 82%,rgba(40,110,230,.10),transparent 44%),repeating-linear-gradient(90deg,transparent 0 30px,rgba(120,180,255,.05) 30px 31px),repeating-linear-gradient(0deg,transparent 0 30px,rgba(120,180,255,.04) 30px 31px);opacity:1}
+.tex-swatch[data-tex="lagoon"]{background-color:#041418;background-image:radial-gradient(ellipse at 24% 20%,rgba(60,230,220,.12),transparent 46%),radial-gradient(ellipse at 80% 74%,rgba(30,190,200,.10),transparent 44%),linear-gradient(115deg,transparent 60%,rgba(160,255,250,.05) 82%,transparent 100%);opacity:1}
+.tex-swatch[data-tex="rose"]{background-color:#170912;background-image:radial-gradient(circle at 76% 20%,rgba(255,130,200,.10),transparent 44%),radial-gradient(circle at 20% 80%,rgba(255,100,170,.08),transparent 42%),url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTMwIiB2aWV3Qm94PSIwIDAgMTgwIDEzMCI+PGcgZm9udC1mYW1pbHk9InNlcmlmIiBmb250LXdlaWdodD0iNzAwIj48dGV4dCB4PSIxOCIgeT0iNDAiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNmZjllY2YiIG9wYWNpdHk9Ii4yNiI+4pmlPC90ZXh0Pjx0ZXh0IHg9Ijc4IiB5PSIyNiIgZm9udC1zaXplPSIxNSIgZmlsbD0iI2ZmYzRlNSIgb3BhY2l0eT0iLjI0Ij7imaU8L3RleHQ+PHRleHQgeD0iMTM2IiB5PSI1NiIgZm9udC1zaXplPSIxOSIgZmlsbD0iI2ZmN2ZiZiIgb3BhY2l0eT0iLjIyIj7imaU8L3RleHQ+PHRleHQgeD0iNDQiIHk9IjEwMCIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2ZmOWVjZiIgb3BhY2l0eT0iLjIyIj7imaU8L3RleHQ+PHRleHQgeD0iMTEwIiB5PSIxMTAiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiNmZmIzZGMiIG9wYWNpdHk9Ii4yMCI+4pmlPC90ZXh0PjwvZz48L3N2Zz4=");opacity:1}
+.tex-swatch[data-tex="royal"]{background-color:#131005;background-image:repeating-linear-gradient(45deg,transparent 0 18px,rgba(255,209,102,.06) 18px 19px),repeating-linear-gradient(-45deg,transparent 0 18px,rgba(255,209,102,.05) 18px 19px),radial-gradient(ellipse at 50% 0%,rgba(255,224,150,.10),transparent 45%);opacity:1}
+.tex-swatch[data-tex="mono"]{background-color:#0b0c0e;background-image:repeating-linear-gradient(90deg,transparent 0 26px,rgba(255,255,255,.045) 26px 27px),repeating-linear-gradient(0deg,transparent 0 26px,rgba(255,255,255,.035) 26px 27px),radial-gradient(ellipse at 70% 12%,rgba(255,255,255,.06),transparent 40%);opacity:1}
 </style>
 <style>/* ============================================================================
    STATIONS TAB + FAVORITES TAB
@@ -2232,6 +2248,14 @@ html[data-hifi-texture="plush"] .hifi-texture-surface{opacity:.92;background-col
 .drawer-head .dh-thumb.tex-swatch[data-tex="diamond"]{background-color:#0b0718;background-image:repeating-linear-gradient(45deg,transparent 0 26px,rgba(180,140,255,.09) 26px 27px),repeating-linear-gradient(-45deg,transparent 0 26px,rgba(180,140,255,.09) 26px 27px),radial-gradient(ellipse at 50% 45%,rgba(176,108,255,.09),transparent 55%)}
 .drawer-head .dh-thumb.tex-swatch[data-tex="threads"]{background-color:#090516;background-image:radial-gradient(circle at 80% 15%,rgba(255,209,102,.06),transparent 40%),url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTMwIiB2aWV3Qm94PSIwIDAgMTgwIDEzMCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj48cGF0aCBkPSJNLTUgMjAgQyA0MCA2MCwgODAgLTEwLCAxODUgNDAiIHN0cm9rZT0iI2ZmZDE2NiIgc3Ryb2tlLXdpZHRoPSIxLjYiIG9wYWNpdHk9Ii4zMCIvPjxwYXRoIGQ9Ik0tNSA3MCBDIDUwIDMwLCAxMTAgMTEwLCAxODUgNjAiIHN0cm9rZT0iI2IwNmNmZiIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIuMzIiLz48cGF0aCBkPSJNLTUgMTEwIEMgNjAgODQsIDEyMCAxMjgsIDE4NSA5NiIgc3Ryb2tlPSIjNTVkZmZmIiBzdHJva2Utd2lkdGg9IjEuNCIgb3BhY2l0eT0iLjI0Ii8+PHBhdGggZD0iTS01IDQ2IEMgNzAgOTIsIDkwIDIyLCAxODUgODgiIHN0cm9rZT0iI2ZmNmJjNyIgc3Ryb2tlLXdpZHRoPSIxLjIiIG9wYWNpdHk9Ii4yMiIvPjwvZz48L3N2Zz4=")}
 .drawer-head .dh-thumb.tex-swatch[data-tex="plush"]{background-color:#0c0716;background-image:radial-gradient(ellipse at 25% 30%,rgba(216,190,255,.10) 0 .7px,rgba(0,0,0,.28) 1px 1.5px,transparent 2px),radial-gradient(ellipse at 75% 65%,rgba(0,0,0,.32) 0 .8px,rgba(216,190,255,.07) 1.1px 1.7px,transparent 2.2px);background-size:9px 7px,12px 10px}
+.drawer-head .dh-thumb.tex-swatch[data-tex="lava"]{background-color:#170507;background-image:radial-gradient(ellipse at 50% 115%,rgba(255,64,64,.20) 0 30%,transparent 58%),radial-gradient(circle at 18% 25%,rgba(255,120,80,.08),transparent 40%),radial-gradient(circle at 84% 70%,rgba(180,20,40,.10),transparent 42%),url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTMwIiB2aWV3Qm94PSIwIDAgMTgwIDEzMCI+PGcgZm9udC1mYW1pbHk9InNlcmlmIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjZmY1YTRkIiBvcGFjaXR5PSIuMjAiPjx0ZXh0IHg9IjE2IiB5PSIzNiIgZm9udC1zaXplPSIxMyI+4pymPC90ZXh0Pjx0ZXh0IHg9IjcwIiB5PSIyMCIgZm9udC1zaXplPSI5IiBmaWxsPSIjZmY4YTVjIj7inKY8L3RleHQ+PHRleHQgeD0iMTMwIiB5PSI1MiIgZm9udC1zaXplPSIxMSI+4pymPC90ZXh0Pjx0ZXh0IHg9IjQyIiB5PSI5NiIgZm9udC1zaXplPSI4IiBmaWxsPSIjZmZiMDhhIj7inKY8L3RleHQ+PHRleHQgeD0iMTE4IiB5PSIxMDgiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiNmZjZiNWMiPuKcpjwvdGV4dD48L2c+PC9zdmc+")}
+.drawer-head .dh-thumb.tex-swatch[data-tex="ember"]{background-color:#190b04;background-image:radial-gradient(ellipse at 22% 18%,rgba(255,150,40,.14),transparent 46%),radial-gradient(ellipse at 80% 80%,rgba(255,96,20,.12),transparent 45%),linear-gradient(180deg,transparent 70%,rgba(255,190,90,.06) 100%)}
+.drawer-head .dh-thumb.tex-swatch[data-tex="jade"]{background-color:#04140e;background-image:radial-gradient(ellipse at 20% 22%,rgba(46,230,140,.12),transparent 46%),radial-gradient(ellipse at 82% 78%,rgba(20,180,120,.10),transparent 45%),radial-gradient(ellipse at 50% 110%,rgba(120,255,200,.07) 0 26%,transparent 50%)}
+.drawer-head .dh-thumb.tex-swatch[data-tex="carbide"]{background-color:#060d1c;background-image:radial-gradient(ellipse at 78% 16%,rgba(70,150,255,.13),transparent 44%),radial-gradient(ellipse at 16% 82%,rgba(40,110,230,.10),transparent 44%),repeating-linear-gradient(90deg,transparent 0 30px,rgba(120,180,255,.05) 30px 31px),repeating-linear-gradient(0deg,transparent 0 30px,rgba(120,180,255,.04) 30px 31px)}
+.drawer-head .dh-thumb.tex-swatch[data-tex="lagoon"]{background-color:#041418;background-image:radial-gradient(ellipse at 24% 20%,rgba(60,230,220,.12),transparent 46%),radial-gradient(ellipse at 80% 74%,rgba(30,190,200,.10),transparent 44%),linear-gradient(115deg,transparent 60%,rgba(160,255,250,.05) 82%,transparent 100%)}
+.drawer-head .dh-thumb.tex-swatch[data-tex="rose"]{background-color:#170912;background-image:radial-gradient(circle at 76% 20%,rgba(255,130,200,.10),transparent 44%),radial-gradient(circle at 20% 80%,rgba(255,100,170,.08),transparent 42%),url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTMwIiB2aWV3Qm94PSIwIDAgMTgwIDEzMCI+PGcgZm9udC1mYW1pbHk9InNlcmlmIiBmb250LXdlaWdodD0iNzAwIj48dGV4dCB4PSIxOCIgeT0iNDAiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNmZjllY2YiIG9wYWNpdHk9Ii4yNiI+4pmlPC90ZXh0Pjx0ZXh0IHg9Ijc4IiB5PSIyNiIgZm9udC1zaXplPSIxNSIgZmlsbD0iI2ZmYzRlNSIgb3BhY2l0eT0iLjI0Ij7imaU8L3RleHQ+PHRleHQgeD0iMTM2IiB5PSI1NiIgZm9udC1zaXplPSIxOSIgZmlsbD0iI2ZmN2ZiZiIgb3BhY2l0eT0iLjIyIj7imaU8L3RleHQ+PHRleHQgeD0iNDQiIHk9IjEwMCIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2ZmOWVjZiIgb3BhY2l0eT0iLjIyIj7imaU8L3RleHQ+PHRleHQgeD0iMTEwIiB5PSIxMTAiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiNmZmIzZGMiIG9wYWNpdHk9Ii4yMCI+4pmlPC90ZXh0PjwvZz48L3N2Zz4=")}
+.drawer-head .dh-thumb.tex-swatch[data-tex="royal"]{background-color:#131005;background-image:repeating-linear-gradient(45deg,transparent 0 18px,rgba(255,209,102,.06) 18px 19px),repeating-linear-gradient(-45deg,transparent 0 18px,rgba(255,209,102,.05) 18px 19px),radial-gradient(ellipse at 50% 0%,rgba(255,224,150,.10),transparent 45%)}
+.drawer-head .dh-thumb.tex-swatch[data-tex="mono"]{background-color:#0b0c0e;background-image:repeating-linear-gradient(90deg,transparent 0 26px,rgba(255,255,255,.045) 26px 27px),repeating-linear-gradient(0deg,transparent 0 26px,rgba(255,255,255,.035) 26px 27px),radial-gradient(ellipse at 70% 12%,rgba(255,255,255,.06),transparent 40%)}
 .drawer-head .dh-chev{ flex:0 0 auto; width:18px; height:18px; color:var(--muted); transition:transform .22s ease; }
 .drawer-head .dh-chev svg{ width:18px; height:18px; }
 .settings-drawer[open] .drawer-head .dh-chev{ transform:rotate(180deg); }
@@ -2498,36 +2522,23 @@ html[data-hifi-texture="plush"] .hifi-texture-surface{opacity:.92;background-col
 .factory-btn.cancel{ color:var(--text); border:1px solid var(--line-strong); background:rgba(9,20,31,.5); }
 .factory-btn.go{ color:#fff3ec; border:1px solid #ffb08c; background:linear-gradient(145deg,#e97848,#b93f3b); box-shadow:0 6px 16px -7px rgba(210,64,55,.7); }
 
-/* ---- unlock-method chooser (centered modal — see .sheet in shell.css) --- */
-#unlockSheet{ border-radius:24px; border:1.5px solid var(--gold); padding-bottom:18px; }
-.unlock-opts{ display:flex; flex-direction:column; gap:8px; padding:2px; }
-.unlock-opt{
-  appearance:none; cursor:pointer; text-align:right;
-  display:flex; align-items:center; gap:12px; flex-direction:row-reverse;
-  padding:12px 14px; border-radius:14px;
-  border:1px solid var(--line);
-  background:linear-gradient(145deg, rgba(20,44,60,.55), rgba(9,20,31,.6));
-  color:var(--text); font-family:inherit;
-  transition:border-color .16s ease, transform .1s ease, opacity .16s ease;
-}
-.unlock-opt:active{ transform:scale(.98); }
-.unlock-opt .uo-ic{
-  flex:0 0 auto; width:38px; height:38px; border-radius:11px;
-  display:flex; align-items:center; justify-content:center;
-  border:1px solid rgba(232,196,107,.3);
-  background:linear-gradient(150deg, rgba(232,196,107,.12), rgba(9,20,31,.5));
-  color:var(--gold);
-}
-.unlock-opt .uo-ic svg{ width:20px; height:20px; }
-.unlock-opt .uo-copy{ flex:1 1 auto; min-width:0; text-align:right; }
-.unlock-opt .uo-copy b{ display:block; font-size:13px; font-weight:800; }
-.unlock-opt .uo-copy small{ display:block; margin-top:2px; font-size:9.5px; color:var(--muted); }
-.unlock-opt .uo-mk{ flex:0 0 auto; width:20px; height:20px; color:var(--gold); opacity:0; transition:opacity .15s ease; }
-.unlock-opt .uo-mk svg{ width:20px; height:20px; }
-.unlock-opt.sel{ border-color:var(--gold); background:linear-gradient(145deg, rgba(232,196,107,.16), rgba(9,20,31,.6)); }
-.unlock-opt.sel .uo-mk{ opacity:1; }
-.unlock-opt.dis{ opacity:.45; cursor:default; }
 
+/* ---- round 15b: My-Stations selective backup (tick circles + bar) ------- */
+.bk-tick{ flex:none; width:22px; height:22px; margin-left:2px; border-radius:50%;
+  border:1.5px solid rgba(180,140,255,.45); display:grid; place-items:center;
+  font-size:12px; font-weight:900; color:transparent; transition:background .12s ease, color .12s ease, border-color .12s ease; }
+.st-row.bk-on .bk-tick{ background:linear-gradient(145deg,#fff1a8,#f0ad3f); border-color:#fff0b4; color:#3b2306; }
+#restoreOpts{ display:flex; flex-direction:column; gap:8px; padding:2px 0 6px; }
+#stBackupBar{ display:flex; align-items:center; gap:8px; flex:1 1 100%; min-width:0;
+  padding:7px 10px; border-radius:14px; border:1px solid rgba(180,140,255,.28);
+  background:linear-gradient(145deg, rgba(90,55,160,.5), rgba(24,12,52,.7)); }
+#stBackupBar[hidden]{ display:none; }
+#stBackupCount{ flex:1 1 auto; min-width:0; font-size:12px; font-weight:800; color:var(--text); }
+.bk-btn{ flex:none; height:34px; padding:0 12px; border-radius:10px; font-family:inherit;
+  font-size:11.5px; font-weight:800; cursor:pointer; }
+.bk-btn.ghost{ color:var(--muted); background:transparent; border:1px solid var(--line-strong); }
+.bk-btn.go{ color:#3b2306; background:linear-gradient(145deg,#fff1a8,#f0ad3f); border:1px solid #fff0b4; }
+.bk-btn.go:disabled{ opacity:.4; cursor:default; }
 
 /* ============================================================================
    ABOUT CARD v2 — formal edition (faithful port of the latest deployed app).
@@ -2556,7 +2567,7 @@ html[data-hifi-texture="plush"] .hifi-texture-surface{opacity:.92;background-col
   color:#8df5dd; background:rgba(67,230,195,.11); border:1px solid rgba(67,230,195,.34);
   border-radius:99px; padding:5px 8px; direction:ltr;
 }
-.hfa-p{ margin:0 0 9px; font-size:10.2px; line-height:2; color:#c3d9e2; text-align:justify; }
+.hfa-p{ margin:0 0 9px; font-size:11px; line-height:2; color:#c3d9e2; text-align:justify; }
 .hfa-p.muted{ color:#a3bdc8; font-size:9.8px; }
 .hfa-p[dir="ltr"]{ direction:ltr; }
 .hfa-rule{ height:1px; margin:12px 2px; background:linear-gradient(90deg,transparent,rgba(164,207,230,.24),transparent); }
@@ -2575,7 +2586,7 @@ html[data-hifi-texture="plush"] .hifi-texture-surface{opacity:.92;background-col
 .hfa-legal-head{ display:flex; align-items:center; gap:7px; margin-bottom:8px; }
 .hfa-legal-head svg{ flex:0 0 auto; }
 .hfa-legal-head b{ font-size:10px; font-weight:850; color:#ffe08a; letter-spacing:.2px; line-height:1.3; }
-.hfa-legal p{ margin:0 0 7px; font-size:9.1px; line-height:1.95; color:#9db6c1; text-align:justify; }
+.hfa-legal p{ margin:0 0 7px; font-size:10.5px; line-height:1.95; color:#9db6c1; text-align:justify; }
 .hfa-legal p[dir="ltr"]{ direction:ltr; }
 .hfa-legal p:last-of-type{ margin-bottom:0; }
 .hfa-legal b.t{ color:#c9dee7; font-weight:800; }
@@ -2843,6 +2854,18 @@ html[data-hifi-texture="plush"] .hifi-texture-surface{opacity:.92;background-col
               <span class="st-act-plus">＋</span>
               <span class="st-act-copy"><b>افزودن رادیو</b><small>Add Station</small></span>
             </button>
+            <!-- round 15b: My-Stations SELECTIVE backup — the user ticks any
+                 number of stations and ONE clean file is built (no fav/lock
+                 state ever travels). Restore = ＋ Add Station → from file. -->
+            <button class="st-act st-act-add" id="stBackupOpen" type="button" hidden>
+              <span class="st-act-plus">⤓</span>
+              <span class="st-act-copy"><b>پشتیبان‌گیری</b><small>Backup</small></span>
+            </button>
+            <div id="stBackupBar" hidden>
+              <span id="stBackupCount">۰ ایستگاه انتخاب شد</span>
+              <button type="button" class="bk-btn ghost" id="stBackupCancel">انصراف</button>
+              <button type="button" class="bk-btn go" id="stBackupMake" disabled>ساخت فایل</button>
+            </div>
           </div>
 
           <!-- result head: title + count on the right, active-category chip on the left -->
@@ -3050,10 +3073,6 @@ html[data-hifi-texture="plush"] .hifi-texture-surface{opacity:.92;background-col
               <span class="sr-copy"><b>تغییر PIN والدین <i>Change PIN</i></b><small>رمز چهاررقمی جدید</small></span>
               <button type="button" class="set-pick" id="parentChangePin">تغییر PIN</button>
             </div>
-            <div class="set-row" id="unlockModeRow">
-              <span class="sr-copy"><b>روش باز کردن قفل <i>Unlock Method</i></b><small id="unlockModeHint">فقط رمز عددی — Numeric PIN</small></span>
-              <button type="button" class="set-pick" id="unlockModePick">تغییر</button>
-            </div>
           </section>
 
           <!-- ============ GROUP 4 · LANGUAGE & INFO ============ -->
@@ -3065,7 +3084,7 @@ html[data-hifi-texture="plush"] .hifi-texture-surface{opacity:.92;background-col
               <span class="set-static">فارسی · EN</span>
             </div>
             <div class="set-row">
-              <span class="sr-copy"><b>نسخهٔ اپ <i>App Version</i></b><small id="appVerLine">HiFi Radio Global — v1.28.56</small></span>
+              <span class="sr-copy"><b>نسخهٔ اپ <i>App Version</i></b><small id="appVerLine">HiFi Radio Global — v1.29.1</small></span>
               <span class="set-badge">Stable</span>
             </div>
           </section>
@@ -3106,13 +3125,13 @@ html[data-hifi-texture="plush"] .hifi-texture-surface{opacity:.92;background-col
               <div class="hfa-top">
                 <div class="hfa-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8df5dd" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 3 7 7.6"/><rect x="2.6" y="7.6" width="18.8" height="12.8" rx="3.2"/><circle cx="16.4" cy="14" r="3.1"/><path d="M6.4 11.6h4.6M6.4 15.2h4.6M6.4 18h2.6"/></svg></div>
                 <div class="hfa-titles"><h3>HiFi Radio Global</h3><small>پخش‌کنندهٔ جهانی رادیوی اینترنتی · Global internet radio player</small></div>
-                <span class="hfa-ver">v1.28.56</span>
+                <span class="hfa-ver">v1.29.1</span>
               </div>
 
               <p class="hfa-p">HiFi Radio Global یک پخش‌کنندهٔ مستقل و چندزبانهٔ رادیوی اینترنتی است که دسترسی به هزاران ایستگاه زندهٔ رادیویی از سراسر جهان را در یک برنامهٔ سبک، سریع و بدون وابستگی به سرویس بیرونی فراهم می‌کند. جست‌وجوی ایستگاه بر اساس نام، کشور، زبان و ژانر انجام می‌شود و نتیجه بی‌درنگ و بدون نیاز به ثبت‌نام یا حساب کاربری در دسترس است.</p>
               <p class="hfa-p" dir="ltr">HiFi Radio Global is an independent, multilingual internet-radio player that brings thousands of live stations from around the world into one lightweight, fast application with no external service dependency. Stations can be found by name, country, language or genre, and results are available instantly, without registration or a user account.</p>
-              <p class="hfa-p muted">کاربر می‌تواند فهرست شخصی خود را در «ایستگاه‌های من» و «علاقه‌مندی‌ها» بسازد، ایستگاه دلخواه را با وارد کردن آدرس، درون‌ریزی فایل یا اسکن کد QR اضافه و پیش از ذخیره استریم را آزمایش کند، ترتیب فهرست را با کشیدن‌ودرَگ به‌دلخواه بچیند و هر ایستگاه را از طریق QR با دیگران به اشتراک بگذارد. ایستگاه‌های منتخب با رمز چهاررقمی کنترل والدین یا اثر انگشت محافظت می‌شوند و از همهٔ تنظیمات و فهرست‌ها می‌توان یک پشتیبان رمزگذاری‌شده گرفت و روی دستگاه دیگری بازیابی کرد. یازده حالت اکولایزر، سی‌وشش تم نمایشگر LCD، هجده بافت پس‌زمینه، تایمر خواب، پخش در پس‌زمینه و بازخورد لمسی، تجربهٔ شنیدن را کاملاً شخصی می‌کنند.</p>
-              <p class="hfa-p muted" dir="ltr">Listeners can build personal collections in My Stations and Favorites, add any station by URL, file import or QR scan and test the stream before saving, reorder lists by drag-and-drop, and share any station via QR. Selected stations are protected with a four-digit parental PIN or a fingerprint, and every setting and list can be exported as an encrypted backup and restored on another device. Eleven equaliser modes, thirty-six LCD display themes, eighteen background textures, a sleep timer, background playback and haptic feedback make the listening experience fully personal.</p>
+              <p class="hfa-p muted">کاربر می‌تواند فهرست شخصی خود را در «ایستگاه‌های من» و «علاقه‌مندی‌ها» بسازد، ایستگاه دلخواه را با وارد کردن آدرس، درون‌ریزی فایل یا اسکن کد QR اضافه و پیش از ذخیره استریم را آزمایش کند، ترتیب فهرست را با کشیدن‌ودرَگ به‌دلخواه بچیند و هر ایستگاه را از طریق QR با دیگران به اشتراک بگذارد. ایستگاه‌های منتخب با رمز چهاررقمی کنترل والدین یا اثر انگشت محافظت می‌شوند و از همهٔ تنظیمات و فهرست‌ها می‌توان یک پشتیبان رمزگذاری‌شده گرفت و روی دستگاه دیگری بازیابی کرد. یازده حالت اکولایزر، سی‌وشش تم نمایشگر LCD، بیست‌وشش بافت پس‌زمینه، تایمر خواب، پخش در پس‌زمینه و بازخورد لمسی، تجربهٔ شنیدن را کاملاً شخصی می‌کنند.</p>
+              <p class="hfa-p muted" dir="ltr">Listeners can build personal collections in My Stations and Favorites, add any station by URL, file import or QR scan and test the stream before saving, reorder lists by drag-and-drop, and share any station via QR. Selected stations are protected with a four-digit parental PIN or a fingerprint, and every setting and list can be exported as an encrypted backup and restored on another device. Eleven equaliser modes, thirty-six LCD display themes, twenty-six background textures, a sleep timer, background playback and haptic feedback make the listening experience fully personal.</p>
 
               <div class="hfa-rule"></div>
               <p class="hfa-kicker">قابلیت‌های اصلی · Key capabilities</p>
@@ -3120,7 +3139,7 @@ html[data-hifi-texture="plush"] .hifi-texture-surface{opacity:.92;background-col
                 <span>جست‌وجوی جهانی</span><span>ایستگاه‌های من</span><span>علاقه‌مندی‌ها</span>
                 <span>افزودن با URL / فایل / QR</span><span>آزمایش استریم</span><span>ترتیب کشیدنی</span>
                 <span>اشتراک‌گذاری با QR</span><span>قفل والدین و اثر انگشت</span><span>پشتیبان رمزگذاری‌شده</span>
-                <span>۱۱ حالت اکولایزر</span><span>۳۶ تم LCD</span><span>۱۸ بافت پس‌زمینه</span>
+                <span>۱۱ حالت اکولایزر</span><span>۳۶ تم LCD</span><span>۲۶ بافت پس‌زمینه</span>
                 <span>تایمر خواب</span><span>پخش در پس‌زمینه</span><span>بازخورد لمسی</span>
                 <span>دوزبانه فارسی/English</span>
               </div>
@@ -3265,6 +3284,38 @@ html[data-hifi-texture="plush"] .hifi-texture-surface{opacity:.92;background-col
       </div>
     </div>
 
+    <!-- round 15b: central restore — where do the extracted stations land? -->
+    <div class="sheet-backdrop" id="restoreBackdrop" aria-hidden="true">
+      <div class="sheet" id="restoreSheet" role="dialog" aria-label="ذخیرهٔ ایستگاه‌های خوانده‌شده">
+        <button class="sheet-x" id="restoreClose" type="button" aria-label="بستن">✕</button>
+        <div class="sheet-head">
+          <h3>ذخیرهٔ ایستگاه‌های خوانده‌شده</h3>
+          <p id="restoreSub">—</p>
+        </div>
+        <div class="unlock-opts" id="restoreOpts">
+          <button type="button" class="sheet-choice" data-dest="my">
+            <span class="sc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/><circle cx="12" cy="13.5" r="2.6"/></svg></span>
+            <span class="sc-copy"><b>ایستگاه‌های من</b><small>My Stations</small></span>
+            <span class="sc-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4 10-10"/></svg></span>
+          </button>
+          <button type="button" class="sheet-choice" data-dest="popular">
+            <span class="sc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 10.5 9M6 9h5M13 20l3-5.5 3 5.5M14 9.5 17 4l3 5.5"/></svg></span>
+            <span class="sc-copy"><b>برترین‌ها</b><small>Popular</small></span>
+            <span class="sc-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4 10-10"/></svg></span>
+          </button>
+          <button type="button" class="sheet-choice" data-dest="fav">
+            <span class="sc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.6-9.3-9.3C1.4 7.9 3.6 5 6.7 5c2 0 3.6 1.1 4.3 2.6h2c.7-1.5 2.3-2.6 4.3-2.6 3.1 0 5.3 2.9 4 6.2-1.8 4.7-9.3 9.3-9.3 9.3Z"/></svg></span>
+            <span class="sc-copy"><b>علاقه‌مندی‌ها</b><small>Favorites</small></span>
+            <span class="sc-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4 10-10"/></svg></span>
+          </button>
+        </div>
+        <div class="factory-actions">
+          <button class="factory-btn cancel" id="restoreCancel" type="button">انصراف — Cancel</button>
+          <button class="factory-btn go" id="restoreConfirm" type="button" disabled>ذخیره — Save</button>
+        </div>
+      </div>
+    </div>
+
     <!-- factory-reset confirm -->
     <div class="sheet-backdrop" id="factoryBackdrop" aria-hidden="true">
       <div class="sheet" id="factorySheet" role="dialog" aria-label="بازنشانی کارخانه">
@@ -3279,33 +3330,6 @@ html[data-hifi-texture="plush"] .hifi-texture-surface{opacity:.92;background-col
       </div>
     </div>
 
-    <!-- unlock-method chooser (keypad / fingerprint / both) -->
-    <div class="sheet-backdrop" id="unlockBackdrop" aria-hidden="true">
-      <div class="sheet" id="unlockSheet" role="dialog" aria-label="روش باز کردن قفل">
-        <button class="sheet-x" id="unlockClose" type="button" aria-label="بستن">✕</button>
-        <div class="sheet-head">
-          <h3>روش باز کردن قفل — Unlock Method</h3>
-          <p>برای قفل‌کردن ایستگاه‌ها و گوش دادن به ایستگاه‌های قفل‌شده؛ صفحه‌کلید رمز همیشه پشتیبان است.</p>
-        </div>
-        <div class="unlock-opts" id="unlockOpts">
-          <button class="unlock-opt" data-mode="keypad">
-            <span class="uo-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h.01M12 8h.01M16 8h.01M8 12h.01M12 12h.01M16 12h.01M8 16h8"/></svg></span>
-            <span class="uo-copy"><b>فقط رمز عددی</b><small>Numeric PIN only · همیشه صفحه‌کلید امن</small></span>
-            <span class="uo-mk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-11"/></svg></span>
-          </button>
-          <button class="unlock-opt" data-mode="fingerprint">
-            <span class="uo-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11a2 2 0 0 0-2 2c0 2-.3 4-1 5.5M12 7a6 6 0 0 0-6 6c0 1-.1 2-.4 3M12 4a9 9 0 0 0-9 9M15 13a3 3 0 0 0-3-3M17.6 18.5c.4-1.4.6-3 .6-5A6 6 0 0 0 15 8.3M20.5 15c.3-1 .5-2.3.5-4A9 9 0 0 0 16 3.1M14 20c.4-1 .7-2.3.9-4"/></svg></span>
-            <span class="uo-copy"><b>فقط اثر انگشت</b><small>Fingerprint only · حسگر گوشی؛ رمز عددی پشتیبان</small></span>
-            <span class="uo-mk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-11"/></svg></span>
-          </button>
-          <button class="unlock-opt" data-mode="both">
-            <span class="uo-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11a2 2 0 0 0-2 2c0 2-.3 4-1 5.5M12 7a6 6 0 0 0-6 6c0 1-.1 2-.4 3M15 13a3 3 0 0 0-3-3M17.6 18.5c.4-1.4.6-3 .6-5A6 6 0 0 0 15 8.3"/></svg></span>
-            <span class="uo-copy"><b>هر دو</b><small>Both · اثر انگشت به‌همراه صفحه‌کلید</small></span>
-            <span class="uo-mk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-11"/></svg></span>
-          </button>
-        </div>
-      </div>
-    </div>
 
    </div><!-- /.app-inner -->
   </div>
@@ -3322,7 +3346,12 @@ html[data-hifi-texture="plush"] .hifi-texture-surface{opacity:.92;background-col
    STATION CATALOG — 39 verified stations bundled with the app (offline seed).
    Global search adds thousands more live from the Radio Browser API.
    ============================================================================ */
-window.HIFI_STATIONS = [{"name":"Radio Shemroon","url":"https://s35.myradiostream.com:33640/listen.mp3","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Comedy, Music","codec":"MP3","bitrate":128,"status":"verified"},{"name":"Radio Iran International","url":"https://stream.radiojar.com/dfnrphnr5f0uv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, News","codec":"MP3","bitrate":128,"status":"verified"},{"name":"Radio Farda","url":"https://stream.radiojar.com/cp13r2cpn3quv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, News, Talk","codec":"MP3","bitrate":128,"status":"verified"},{"name":"Radio Yar","url":"https://stream.zeno.fm/oyb5oh6ne3tuv","country":"United States","countrycode":"US","language":"Persian","tags":"Persian, Music","codec":"MP3","bitrate":128,"status":"verified"},{"name":"Radio Parsa","url":"https://parsa.awsvps.com/stream","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Political, Talk","codec":"MP3","bitrate":64,"status":"verified"},{"name":"Radio Moein","url":"https://stream.zeno.fm/v5m2kkzfashvv","country":"United States","countrycode":"US","language":"Persian","tags":"Persian, Music","codec":"MP3","bitrate":128,"status":"verified"},{"name":"Radio Hayedeh","url":"https://stream.zeno.fm/wmr6gp4cbshvv","country":"United States","countrycode":"US","language":"Persian","tags":"Persian, Music","codec":"MP3","bitrate":128,"status":"verified"},{"name":"Radio Mahasti","url":"https://stream.zeno.fm/fvf7651cbshvv","country":"United States","countrycode":"US","language":"Persian","tags":"Persian, Music","codec":"MP3","bitrate":128,"status":"verified"},{"name":"Radio Smooth Chill","url":"https://ice-sov.musicradio.com/SmoothChillMP3","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":" رادیو اسموت چیل.csv","captureStatus":"healthy_direct","captureHttp200":true,"metadataName":"Smooth Chill","hls":0},{"name":"KRAL POP Radio","url":"https://dygedge.radyotvonline.net/kralpop/playlist.m3u8","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"AAC/HLS","bitrate":128,"status":"batch-captured","sourceFile":"KRAL POP Radio.csv","captureStatus":"healthy_direct","captureHttp200":true,"hls":1},{"name":"Slow Karma Turk","url":"https://yayin.radyomadyo.com:8004/stream","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو اسلو کارما ترک.csv","captureStatus":"healthy_direct","captureHttp200":true,"metadataName":"Slow Time","hls":0},{"name":"Radio Skeptic","url":"https://stream.zeno.fm/ab31kewxovcvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو اسکپتیک.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Radio Skeptic","hls":0},{"name":"Radio Iran Online","url":"https://stream.zeno.fm/6xc4gihgprhtv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو انلاین ایران.csv","captureStatus":"needs_resolver_recheck","captureHttp200":true,"hls":0},{"name":"Radio Toranj Canada","url":"https://eagle.streemlion.com/proxy/toranjm1?mp=/stream","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو ترنج کانادا.csv","captureStatus":"healthy_direct","captureHttp200":true,"metadataName":"Toranj Media Crop Stream","hls":0},{"name":"Radio Tehranto","url":"https://stream.zeno.fm/4mhrmcx4tm0uv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو تهرانتو.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Radio Tehranto","hls":0},{"name":"Radio Today Los Angeles","url":"https://stream.zeno.fm/tdpu7xj3cwnuv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو تو دی لوس انجلس.csv","captureStatus":"needs_resolver_recheck","captureHttp200":true,"hls":0},{"name":"Radio Khalifa FM","url":"https://stream.zeno.fm/y8gdyaatxhhvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو خلیفه اف ام.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Khalifa FM ????? ?? ??","hls":0},{"name":"Radio Rad","url":"https://stream.zeno.fm/ca05pxfoz6ovv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو راد .csv","captureStatus":"needs_resolver_recheck","captureHttp200":true,"hls":0},{"name":"Radio Ran Israel","url":"https://ams1.reliastream.com/proxy/avico00?mp=/live","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو ران اسراییل.csv","captureStatus":"healthy_direct","captureHttp200":true,"metadataName":"RadioBOSS Stream","hls":0,"aliases":["Radio Gheseh"],"notes":"Same captured stream was previously saved as Radio Gheseh; batch filename identifies it as Radio Ran Israel. Both names are retained as aliases."},{"name":"Radio Salmak","url":"https://stream.radiojar.com/atdbyqwr8vuvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو سلمک.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"atdbyqwr8vuvv","hls":0},{"name":"Radio Sudi Burnett","url":"https://stream.zeno.fm/wk0rv1axn0hvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو سودی برنت.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"SudiBurnett","hls":0},{"name":"Radio Simorgh Original Persian Music","url":"https://stream.zeno.fm/9svfnobkrxrvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو سیمرغ اورجینال.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"RADIOSIMORGHOriginalPersianMusic","hls":0},{"name":"Radio Simorgh Rahaee","url":"https://stream.zeno.fm/ymahaknbrcsuv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو سیمرغ رهایی.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"????? ????? ?????","hls":0},{"name":"Radio Simorgh Music","url":"https://stream.zeno.fm/jl8n7thgcdftv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو سیمرغ موزیک.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"RadioSimorgh","hls":0},{"name":"Radio Shoma","url":"https://stream.radiojar.com/rzcfw4cbsxquv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو شما.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"-","hls":0},{"name":"Radio Sedaye Ashena","url":"https://uksoutha.streaming.broadcast.radio/allfm?1749428734483=","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو صدای اشنا.csv","captureStatus":"healthy_direct","captureHttp200":true,"metadataName":"all fm96.9","hls":0},{"name":"Radio Eshgh","url":"https://stream.zeno.fm/nrm5lnkv3k2vv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو عشق.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"????? ???? ??????","hls":0,"aliases":["Radio Naghmeh"]},{"name":"Farsi Frequency","url":"https://stream.zeno.fm/3q0k3nxazjkvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو فارسی فرکانسی.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Farsi Frequency - Persian Radio","hls":0},{"name":"Radio Farsi London","url":"https://stream.zeno.fm/c3kkavhhzd0uv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو فارسی لندن.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Radio Farsi London","hls":0},{"name":"Mamsi Live Radio","url":"https://live.mamsilive.com/listen/mamsi_live_nostalgic_station/radio.mp3","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو مامسی لایو.csv","captureStatus":"needs_recheck_timeout","captureHttp200":true,"hls":0},{"name":"Radio Max","url":"https://stream.zeno.fm/uwkshiyzzmeuv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو مکس.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"MAX LIVE","hls":0},{"name":"Radio Vira","url":"https://stream.zeno.fm/byyafpsthtzuv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو ویرا.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"radio vira ????? ????","hls":0},{"name":"Persian Nostalgia 1","url":"https://stream.zeno.fm/yjq14yrnqiavv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو پرشین نوستالژی ۱.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Persian Nostalgia 1","hls":0},{"name":"Persian Nostalgia 2","url":"https://stream.zeno.fm/zgnryqpihulvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو پرشین نوستاژی ۲.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Persian Nostalgia 2","hls":0},{"name":"Persian Nostalgia 3","url":"https://stream.zeno.fm/uzcveonohb4vv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو پرشین نوستاژی ۳.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Persian Nostalgia 3","hls":0},{"name":"Radio Kardasti","url":"https://stream.server5.de/hls/farsi/aac_hifi.m3u8","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"AAC/HLS","bitrate":128,"status":"batch-captured","sourceFile":"رادیو کارداستی.csv","captureStatus":"healthy_direct","captureHttp200":true,"hls":1},{"name":"National Iranian Congress","url":"https://stream.zeno.fm/kbt00r580feuv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو کنگره کلی ایرانیان.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"National Iranian Congress","hls":0},{"name":"Radio Googoosh","url":"https://stream.zeno.fm/188wa5ybbshvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"uploads/CSV_2026-08-07_02-38-20.csv","captureStatus":"pending_batch_resolver","captureHttp200":true,"metadataName":"Googoosh - Rooze Khoob","hls":0,"notes":"Zeno base/mount URL; captured resolver token was temporary and not stored."},{"name":"Radio Setareh","url":"https://s2.free-shoutcast.com/stream/18256","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"uploads/CSV_2026-08-07_02-46-26.csv","captureStatus":"pending_batch","captureHttp200":true,"metadataName":"Radio Setareh","hls":0}];
+window.HIFI_STATION_REGISTRY = [{"name":"Radio Shemroon","url":"https://s35.myradiostream.com:33640/listen.mp3","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Comedy, Music","codec":"MP3","bitrate":128,"status":"verified"},{"name":"Radio Iran International","url":"https://stream.radiojar.com/dfnrphnr5f0uv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, News","codec":"MP3","bitrate":128,"status":"verified"},{"name":"Radio Farda","url":"https://stream.radiojar.com/cp13r2cpn3quv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, News, Talk","codec":"MP3","bitrate":128,"status":"verified"},{"name":"Radio Yar","url":"https://stream.zeno.fm/oyb5oh6ne3tuv","country":"United States","countrycode":"US","language":"Persian","tags":"Persian, Music","codec":"MP3","bitrate":128,"status":"verified"},{"name":"Radio Parsa","url":"https://parsa.awsvps.com/stream","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Political, Talk","codec":"MP3","bitrate":64,"status":"verified"},{"name":"Radio Moein","url":"https://stream.zeno.fm/v5m2kkzfashvv","country":"United States","countrycode":"US","language":"Persian","tags":"Persian, Music","codec":"MP3","bitrate":128,"status":"verified"},{"name":"Radio Hayedeh","url":"https://stream.zeno.fm/wmr6gp4cbshvv","country":"United States","countrycode":"US","language":"Persian","tags":"Persian, Music","codec":"MP3","bitrate":128,"status":"verified"},{"name":"Radio Mahasti","url":"https://stream.zeno.fm/fvf7651cbshvv","country":"United States","countrycode":"US","language":"Persian","tags":"Persian, Music","codec":"MP3","bitrate":128,"status":"verified"},{"name":"Radio Smooth Chill","url":"https://ice-sov.musicradio.com/SmoothChillMP3","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":" رادیو اسموت چیل.csv","captureStatus":"healthy_direct","captureHttp200":true,"metadataName":"Smooth Chill","hls":0},{"name":"KRAL POP Radio","url":"https://dygedge.radyotvonline.net/kralpop/playlist.m3u8","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"AAC/HLS","bitrate":128,"status":"batch-captured","sourceFile":"KRAL POP Radio.csv","captureStatus":"healthy_direct","captureHttp200":true,"hls":1},{"name":"Slow Karma Turk","url":"https://yayin.radyomadyo.com:8004/stream","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو اسلو کارما ترک.csv","captureStatus":"healthy_direct","captureHttp200":true,"metadataName":"Slow Time","hls":0},{"name":"Radio Skeptic","url":"https://stream.zeno.fm/ab31kewxovcvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو اسکپتیک.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Radio Skeptic","hls":0},{"name":"Radio Iran Online","url":"https://stream.zeno.fm/6xc4gihgprhtv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو انلاین ایران.csv","captureStatus":"needs_resolver_recheck","captureHttp200":true,"hls":0},{"name":"Radio Toranj Canada","url":"https://eagle.streemlion.com/proxy/toranjm1?mp=/stream","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو ترنج کانادا.csv","captureStatus":"healthy_direct","captureHttp200":true,"metadataName":"Toranj Media Crop Stream","hls":0},{"name":"Radio Tehranto","url":"https://stream.zeno.fm/4mhrmcx4tm0uv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو تهرانتو.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Radio Tehranto","hls":0},{"name":"Radio Today Los Angeles","url":"https://stream.zeno.fm/tdpu7xj3cwnuv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو تو دی لوس انجلس.csv","captureStatus":"needs_resolver_recheck","captureHttp200":true,"hls":0},{"name":"Radio Khalifa FM","url":"https://stream.zeno.fm/y8gdyaatxhhvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو خلیفه اف ام.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Khalifa FM ????? ?? ??","hls":0},{"name":"Radio Rad","url":"https://stream.zeno.fm/ca05pxfoz6ovv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو راد .csv","captureStatus":"needs_resolver_recheck","captureHttp200":true,"hls":0},{"name":"Radio Ran Israel","url":"https://ams1.reliastream.com/proxy/avico00?mp=/live","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو ران اسراییل.csv","captureStatus":"healthy_direct","captureHttp200":true,"metadataName":"RadioBOSS Stream","hls":0,"aliases":["Radio Gheseh"],"notes":"Same captured stream was previously saved as Radio Gheseh; batch filename identifies it as Radio Ran Israel. Both names are retained as aliases."},{"name":"Radio Salmak","url":"https://stream.radiojar.com/atdbyqwr8vuvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو سلمک.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"atdbyqwr8vuvv","hls":0},{"name":"Radio Sudi Burnett","url":"https://stream.zeno.fm/wk0rv1axn0hvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو سودی برنت.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"SudiBurnett","hls":0},{"name":"Radio Simorgh Original Persian Music","url":"https://stream.zeno.fm/9svfnobkrxrvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو سیمرغ اورجینال.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"RADIOSIMORGHOriginalPersianMusic","hls":0},{"name":"Radio Simorgh Rahaee","url":"https://stream.zeno.fm/ymahaknbrcsuv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو سیمرغ رهایی.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"????? ????? ?????","hls":0},{"name":"Radio Simorgh Music","url":"https://stream.zeno.fm/jl8n7thgcdftv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو سیمرغ موزیک.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"RadioSimorgh","hls":0},{"name":"Radio Shoma","url":"https://stream.radiojar.com/rzcfw4cbsxquv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو شما.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"-","hls":0},{"name":"Radio Sedaye Ashena","url":"https://uksoutha.streaming.broadcast.radio/allfm?1749428734483=","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو صدای اشنا.csv","captureStatus":"healthy_direct","captureHttp200":true,"metadataName":"all fm96.9","hls":0},{"name":"Radio Eshgh","url":"https://stream.zeno.fm/nrm5lnkv3k2vv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو عشق.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"????? ???? ??????","hls":0,"aliases":["Radio Naghmeh"]},{"name":"Farsi Frequency","url":"https://stream.zeno.fm/3q0k3nxazjkvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو فارسی فرکانسی.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Farsi Frequency - Persian Radio","hls":0},{"name":"Radio Farsi London","url":"https://stream.zeno.fm/c3kkavhhzd0uv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو فارسی لندن.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Radio Farsi London","hls":0},{"name":"Mamsi Live Radio","url":"https://live.mamsilive.com/listen/mamsi_live_nostalgic_station/radio.mp3","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو مامسی لایو.csv","captureStatus":"needs_recheck_timeout","captureHttp200":true,"hls":0},{"name":"Radio Max","url":"https://stream.zeno.fm/uwkshiyzzmeuv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو مکس.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"MAX LIVE","hls":0},{"name":"Radio Vira","url":"https://stream.zeno.fm/byyafpsthtzuv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو ویرا.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"radio vira ????? ????","hls":0},{"name":"Persian Nostalgia 1","url":"https://stream.zeno.fm/yjq14yrnqiavv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو پرشین نوستالژی ۱.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Persian Nostalgia 1","hls":0},{"name":"Persian Nostalgia 2","url":"https://stream.zeno.fm/zgnryqpihulvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو پرشین نوستاژی ۲.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Persian Nostalgia 2","hls":0},{"name":"Persian Nostalgia 3","url":"https://stream.zeno.fm/uzcveonohb4vv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو پرشین نوستاژی ۳.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"Persian Nostalgia 3","hls":0},{"name":"Radio Kardasti","url":"https://stream.server5.de/hls/farsi/aac_hifi.m3u8","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"AAC/HLS","bitrate":128,"status":"batch-captured","sourceFile":"رادیو کارداستی.csv","captureStatus":"healthy_direct","captureHttp200":true,"hls":1},{"name":"National Iranian Congress","url":"https://stream.zeno.fm/kbt00r580feuv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"رادیو کنگره کلی ایرانیان.csv","captureStatus":"capture_ok_resolver","captureHttp200":true,"metadataName":"National Iranian Congress","hls":0},{"name":"Radio Googoosh","url":"https://stream.zeno.fm/188wa5ybbshvv","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"uploads/CSV_2026-08-07_02-38-20.csv","captureStatus":"pending_batch_resolver","captureHttp200":true,"metadataName":"Googoosh - Rooze Khoob","hls":0,"notes":"Zeno base/mount URL; captured resolver token was temporary and not stored."},{"name":"Radio Setareh","url":"https://s2.free-shoutcast.com/stream/18256","country":"Iran","countrycode":"IR","language":"Persian","tags":"Persian, Captured","codec":"MP3","bitrate":128,"status":"batch-captured","sourceFile":"uploads/CSV_2026-08-07_02-46-26.csv","captureStatus":"pending_batch","captureHttp200":true,"metadataName":"Radio Setareh","hls":0}];
+/* round 15 (Google Play prep): Popular ships EMPTY for the global audience.
+   The 39 Persian stations live on in this hidden REGISTRY — so existing
+   favorites/recents of current users keep resolving — and travel to anyone
+   via the shareable PACK FILE (see HiFiPacks below). */
+window.HIFI_STATIONS = [];
 </script>
   <script>(function(){
  if(window.__hifiFlagIdentityV1)return;window.__hifiFlagIdentityV1=true;
@@ -6061,6 +6090,10 @@ var qrcode = function() {
           '<button type="button" data-hps-key="7">7</button><button type="button" data-hps-key="8">8</button><button type="button" data-hps-key="9">9</button>' +
           '<button type="button" class="hps-tool" data-hps-clear aria-label="پاک کردن همه">C</button><button type="button" data-hps-key="0">0</button><button type="button" class="hps-tool" data-hps-back aria-label="حذف رقم">⌫</button>' +
         '</div>' +
+        /* round 15: fingerprint sensor button — sits UNDER the pad, chosen
+           in the moment (enrolled -> verify; sensor present -> enroll;
+           no sensor -> button stays hidden). PIN always works. */
+        '<button type="button" class="hps-bio" id="hpsBio" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 11c0 3-.5 6.4-3.4 9"/><path d="M12.9 7c3.2.6 5 2.9 5 6.4 0 1.3-.1 2.8-.4 4.2"/><path d="M7.6 8.8c.8-1.3 2.2-2.2 4.4-2.2"/><path d="M6.5 13.4c0-1 .1-2 .3-2.9"/><path d="M8.2 19.2c-.5-.8-.9-1.9-1.2-3.2"/></svg><span>ورود با اثر انگشت</span></button>' +
         '<div class="hps-helper"><span>◆</span> صفحه‌کلید امن داخلی · بدون AutoFill</div>' +
         '<div class="hps-brand" aria-hidden="true">HiFi Radio Global</div>' +
       "</div>";
@@ -6088,6 +6121,10 @@ var qrcode = function() {
       ".hps-keypad .hps-tool{color:#cdb8ff;font-size:14px;background:linear-gradient(145deg,rgba(52,30,96,.9),rgba(20,10,44,.96))}" +
       ".hps-helper{position:relative;z-index:2;color:#72dec9;font-size:8.5px;font-weight:800;letter-spacing:.1px}" +
       ".hps-helper span{margin-left:4px;color:#ffd166}" +
+      ".hps-bio{display:flex;align-items:center;justify-content:center;gap:8px;position:relative;z-index:4;width:100%;height:42px;margin-top:10px;padding:0;border-radius:14px;border:1.5px solid rgba(255,209,102,.34);background:linear-gradient(145deg,rgba(64,36,120,.9),rgba(26,13,54,.95));color:#e9ddff;font-family:inherit;font-size:12px;font-weight:800;letter-spacing:.02em;cursor:pointer}" +
+      ".hps-bio[hidden]{display:none}" +
+      ".hps-bio svg{width:19px;height:19px;color:#ffd166;flex:none}" +
+      ".hps-bio:active{transform:scale(.97);border-color:rgba(255,209,102,.55)}" +
       /* biometric waiting card — a soft in-app bridge so calling the OS
          sensor never feels like the app died and came back */
       "#hifiBioSheet{display:flex;position:fixed;inset:0;z-index:1990;padding:18px;background:rgba(3,10,18,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);will-change:opacity;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}" +
@@ -6159,14 +6196,61 @@ var qrcode = function() {
       value = "";
     }, 72);
   }
-  function askPin(title, onOk, subtitle) {
+  function askPin(title, onOk, subtitle, allowBio) {
     clearPinMemory();
     pinCb = onOk;
     if (titleEl) titleEl.textContent = title || "PIN";
     if (subtitleEl) subtitleEl.textContent = subtitle || "رمز چهاررقمی کنترل والدین را وارد کنید";
     sheet.classList.add("on");
+    refreshBioBtn(!!allowBio);   /* round 15: sensor button under the pad */
   }
   window.HifiSecurePin = { ask: askPin, close: closePin };
+
+  /* round 15 (user redesign): the fingerprint lives ON the keypad — no
+     unlock-method menu, no automatic sensor launch. The button shows only
+     when a print is enrolled (or the device has a sensor, in which case the
+     same button enrols it first). The PIN remains usable at all times. */
+  var bioBtn = document.getElementById("hpsBio");
+  function refreshBioBtn(allow){
+    if (!bioBtn) return;
+    var bio = window.HifiBiometric;
+    if (!allow || !bio || !bio.verify){ bioBtn.hidden = true; return; }
+    if (bio.enrolled && bio.enrolled()){ bioBtn.hidden = false; return; }
+    if (typeof bio.capable === "function"){
+      bio.capable().then(function(c){ bioBtn.hidden = !c; })
+                   .catch(function(){ bioBtn.hidden = true; });
+      return;
+    }
+    bioBtn.hidden = true;
+  }
+  if (bioBtn) bioBtn.addEventListener("click", function(){
+    var bio = window.HifiBiometric;
+    if (!bio || !bio.verify) return;
+    if (!(bio.enrolled && bio.enrolled())){
+      if (typeof bio.enroll === "function"){
+        showBio();
+        bio.enroll().then(function(ok){
+          hideBio();
+          if (ok && subtitleEl) subtitleEl.textContent = "اثر انگشت ثبت شد ✅ — سنسور یا رمز را بزن";
+        }).catch(function(){ hideBio(); });
+      }
+      return;
+    }
+    showBio();
+    bio.verify().then(function(ok){
+      hideBio();
+      if (!ok){
+        try { if (navigator.vibrate) navigator.vibrate([35, 30, 35]); } catch (e) {}
+        if (subtitleEl) subtitleEl.textContent = "تأیید اثر انگشت ناموفق بود — رمز را وارد کن";
+        return;
+      }
+      var cb = pinCb;
+      pinCb = null;
+      closePinAnimated();
+      clearPinMemory();
+      if (typeof cb === "function") cb(null, true);   /* viaBio */
+    }).catch(function(){ hideBio(); });
+  });
 
   /* —— biometric waiting card (in-app bridge around the OS sensor prompt, so
      calling the fingerprint never feels like the app died and came back) —— */
@@ -6198,7 +6282,8 @@ var qrcode = function() {
      security is never weakened, only made consistent. —— */
   function keypadAuth(title, subtitle, onPass, retry) {
     (function again() {
-      askPin(title, function (p) {
+      askPin(title, function (p, viaBio) {
+        if (viaBio) { if (typeof onPass === "function") onPass(); return; }
         var c = read();
         if (!c.pin || p !== c.pin) {
           try { if (navigator.vibrate) navigator.vibrate([35, 30, 35]); } catch (e) {}
@@ -6207,24 +6292,13 @@ var qrcode = function() {
           return;
         }
         if (typeof onPass === "function") onPass();
-      }, subtitle);
+      }, subtitle, true);   /* round 15: offer the sensor button under the pad */
     })();
   }
+  /* round 15 (user directive): the unlock-METHOD choice is gone. Every
+     auth moment opens the keypad; the fingerprint sensor button sits
+     right under the pad — chosen in the moment, never pre-selected. */
   function authByMethod(title, subtitle, onPass, retry) {
-    var bio = window.HifiBiometric;
-    var mode = bio && bio.mode ? bio.mode() : "keypad";
-    if (mode !== "keypad" && bio && bio.enrolled && bio.enrolled()) {
-      showBio();
-      bio.verify().then(function (ok) {
-        hideBio();
-        if (ok) { if (typeof onPass === "function") onPass(); return; }
-        keypadAuth(title, subtitle, onPass, retry);   // fingerprint failed -> keypad
-      }).catch(function () {
-        hideBio();
-        keypadAuth(title, subtitle, onPass, retry);   // cancelled/aborted -> keypad
-      });
-      return;
-    }
     keypadAuth(title, subtitle, onPass, retry);
   }
 
@@ -7191,14 +7265,20 @@ var qrcode = function() {
     try { bootMode = localStorage.getItem("hifiBootStationV1") || "last"; } catch(e){}
     var last = JSON.parse(localStorage.getItem("hifiLastStationV1") || "null");
     if (bootMode === "popular"){
-      var first = (window.HIFI_STATIONS && window.HIFI_STATIONS[0]) || null;
-      if (first && first.url){
+      /* round 15: Popular = hifiPopularCatalogV1 (ships EMPTY; the Persian
+         pack plants itself there on import). No first popular → last played. */
+      var pack = [];
+      try { pack = JSON.parse(localStorage.getItem("hifiPopularCatalogV1") || "[]") || []; } catch(e2){}
+      var first = (pack[0] && pack[0].url) ? pack[0] : null;
+      if (first){
         current = first;
         /* the mini-LCD strip should say برترین‌ها for this session, not the
            category of whoever played last */
-        try { localStorage.setItem("hifiLastPlayCatV1", "@P"); } catch(e2){}
+        try { localStorage.setItem("hifiLastPlayCatV1", "@P"); } catch(e3){}
         reflectLcd();
         emit("hifi:station", { station: current });
+      } else if (last && last.url){
+        current = last; reflectLcd(); emit("hifi:station", { station: current });
       }
     } else if (last && last.url){
       current = last;
@@ -7305,7 +7385,7 @@ var qrcode = function() {
   }
   function resolveByName(name){
     if (known[name]) return known[name];
-    var all = (window.HIFI_STATIONS || []).concat(custom);
+    var all = (window.HIFI_STATION_REGISTRY || window.HIFI_STATIONS || []).concat(custom);
     for (var i=0;i<all.length;i++){ if (all[i].name === name) return all[i]; }
     return { name: name, url: "", country: "", bitrate: 0, codec: "" };
   }
@@ -8431,7 +8511,15 @@ publishApi();
     {id:"bubbles",   name:"حباب‌های صابونی",     en:"Soap Bubbles"},
     {id:"diamond",   name:"شبکه الماسی",        en:"Diamond Grid"},
     {id:"threads",   name:"ریسمان نور",         en:"Light Threads"},
-    {id:"plush",     name:"مخمل بنفش",          en:"Violet Plush"}
+    {id:"plush",     name:"مخمل بنفش",          en:"Violet Plush"},
+    {id:"lava",       name:"لاوای سرخ",             en:"Crimson Lava"},
+    {id:"ember",      name:"کهربای آتشین",          en:"Fire Amber"},
+    {id:"jade",       name:"یشم سبز",               en:"Jade Green"},
+    {id:"carbide",    name:"آبی کاربنی",            en:"Carbide Blue"},
+    {id:"lagoon",     name:"لاگون فیروزه‌ای",       en:"Teal Lagoon"},
+    {id:"rose",       name:"صورتی رؤیایی",          en:"Dreamy Pink"},
+    {id:"royal",      name:"طلای سلطنتی",           en:"Royal Gold"},
+    {id:"mono",       name:"مینیمال سیاه‌وسفید",    en:"Minimal Mono"}
   ];
 
   var root = document.documentElement;
@@ -8495,7 +8583,7 @@ publishApi();
     if (window.__hifiHaptics === false) return;
     var el = e.target && e.target.closest && e.target.closest(
       "button, .sw, .set-pick, .set-row, .eq-choice, .lcd-choice, .tex-choice, " +
-      ".sleep-opt, .unlock-opt, .sheet-choice, .factory-btn, [role='switch'], [data-tap]"
+      ".sleep-opt, .sheet-choice, .factory-btn, [role='switch'], [data-tap]"
     );
     if (el) haptic("tap");
   }, true);
@@ -9000,32 +9088,15 @@ publishApi();
   setBootUi();
 
   /* ======================================================================
-     UNLOCK METHOD — keypad / fingerprint / both (faithful to the original).
-     Persisted to hifiUnlockModeV1. Fingerprint uses WebAuthn when available;
-     the numeric PIN always stays as a fallback (never weakens security).
+     BIOMETRIC ENGINE (round 15 redesign) — the unlock-METHOD menu is GONE;
+     the fingerprint is a sensor button ON the secure keypad, chosen in the
+     moment. Enrolment state persists in hifiBiometricV1. The numeric PIN
+     always remains available (security is never weakened).
      ====================================================================== */
-  var MODE_KEY = "hifiUnlockModeV1";   // 'keypad' | 'fingerprint' | 'both'
   var BIO_KEY  = "hifiBiometricV1";    // { on, backend, cred }
-  var unlockPick = document.getElementById("unlockModePick");
-  var unlockHint = document.getElementById("unlockModeHint");
-  var unlockBack = document.getElementById("unlockBackdrop");
-  var unlockOpts = document.getElementById("unlockOpts");
-  var UNLOCK_LABELS = {
-    keypad:      { fa:"فقط رمز عددی", en:"Numeric PIN" },
-    fingerprint: { fa:"فقط اثر انگشت", en:"Fingerprint" },
-    both:        { fa:"هر دو", en:"Both" }
-  };
 
   function bioRead(){ try { return JSON.parse(localStorage.getItem(BIO_KEY) || "{}"); } catch(_){ return {}; } }
   function bioSave(o){ try { localStorage.setItem(BIO_KEY, JSON.stringify(o)); } catch(_){} }
-  function unlockMode(){
-    var m = "keypad";
-    try { m = localStorage.getItem(MODE_KEY) || "keypad"; } catch(_){}
-    if (m !== "keypad" && m !== "fingerprint" && m !== "both") m = "keypad";
-    // a non-keypad mode is only meaningful once a fingerprint is enrolled
-    if (m !== "keypad" && !bioRead().on) m = "keypad";
-    return m;
-  }
 
   /* --- biometric engine: native Capacitor plugin first, then WebAuthn --- */
   function plug(n){ try { return window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins[n]; } catch(_){ return null; } }
@@ -9101,62 +9172,13 @@ publishApi();
     return Promise.resolve(false);
   }
   // expose to the security module so locked-station unlock can use fingerprint
-  window.HifiBiometric = { mode: unlockMode, verify: bioVerify, enrolled: function(){ return !!bioRead().on; },
-    cancel: function(){ try { if (bioAbort) bioAbort.abort(); } catch(_){} } };
-
-  function setUnlockUi(){
-    var m = unlockMode(), L = UNLOCK_LABELS[m] || UNLOCK_LABELS.keypad;
-    if (unlockHint) unlockHint.textContent = L.fa + " — " + L.en;
-    if (unlockPick) unlockPick.textContent = L.fa;
-    if (unlockOpts) Array.prototype.forEach.call(unlockOpts.querySelectorAll(".unlock-opt"), function(btn){
-      btn.classList.toggle("sel", btn.getAttribute("data-mode") === m);
-    });
-  }
-  function openUnlock(){
-    if (!unlockBack) return;
-    setUnlockUi();
-    // reflect capability in the sub-labels, but NEVER hard-disable a choice
-    // that is already enrolled (matches the original v1.28.9 behaviour)
-    bioCapable().then(function(cap){
-      var enrolled = bioRead().on;
-      Array.prototype.forEach.call(unlockOpts.querySelectorAll(".unlock-opt"), function(btn){
-        var needsBio = btn.getAttribute("data-mode") !== "keypad";
-        btn.classList.toggle("dis", needsBio && !cap && !enrolled);
-      });
-    });
-    unlockBack.classList.add("open"); unlockBack.setAttribute("aria-hidden","false");
-  }
-  function closeUnlock(){ if (unlockBack){ unlockBack.classList.remove("open"); unlockBack.setAttribute("aria-hidden","true"); } }
-  if (unlockPick) unlockPick.addEventListener("click", openUnlock);
-  var unlockCloseBtn = document.getElementById("unlockClose");
-  if (unlockCloseBtn) unlockCloseBtn.addEventListener("click", closeUnlock);
-  if (unlockBack) unlockBack.addEventListener("click", function(e){ if (e.target === unlockBack) closeUnlock(); });
-
-  if (unlockOpts) unlockOpts.addEventListener("click", function(e){
-    var btn = e.target.closest(".unlock-opt"); if (!btn || btn.classList.contains("dis")) return;
-    var m = btn.getAttribute("data-mode");
-    if (m === "keypad"){
-      try { localStorage.setItem(MODE_KEY, "keypad"); } catch(_){}
-      setUnlockUi(); closeUnlock();
-      showToast && showToast("روش: فقط رمز عددی");
-      return;
-    }
-    // fingerprint / both — no PIN needed to choose (v1.28.10)
-    if (bioRead().on){
-      try { localStorage.setItem(MODE_KEY, m); } catch(_){}
-      setUnlockUi(); closeUnlock();
-      showToast && showToast("اثر انگشت فعال شد ✅");
-      return;
-    }
-    closeUnlock();
-    bioEnrol().then(function(ok){
-      if (!ok){ showToast && showToast("ثبت اثر انگشت انجام نشد؛ رمز عددی فعال ماند"); return; }
-      try { localStorage.setItem(MODE_KEY, m); } catch(_){}
-      setUnlockUi();
-      showToast && showToast("اثر انگشت فعال شد ✅");
-    });
-  });
-  setUnlockUi();
+  window.HifiBiometric = {
+    verify: bioVerify,
+    enrolled: function(){ return !!bioRead().on; },
+    capable: bioCapable,   /* does this device have a usable sensor? */
+    enroll:  bioEnrol,     /* enrol straight from the keypad sensor button */
+    cancel:  function(){ try { if (bioAbort) bioAbort.abort(); } catch(_){} }
+  };
 
   /* (CHANGE PIN is owned solely by the security module's bindToggle — the old
      duplicate handler here double-bound the same button and fought its flow.) */
@@ -9439,11 +9461,19 @@ publishApi();
     // blocked we fall back to the classic mailto: navigation. In every case
     // the address is copied too, with a confirmation toast, so it can never
     // dead-end with zero feedback.
-    var gm = "https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=" + encodeURIComponent(addr) +
+    var gm = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(addr) +
              "&su=" + encodeURIComponent("HiFi Radio — پشتیبانی");
-    var w = null;
-    try { w = window.open(gm, "_blank"); } catch(_){ w = null; }
-    if (!w){ try { location.href = "mailto:" + addr; } catch(_){ } }
+    /* round 15 (user report: «برنامه ایمیل باز می‌شود ولی صفحه‌ی New Mail نه»):
+       window.open() was popup-blocked on mobile and the mailto: fallback
+       opened the client WITHOUT a compose screen. A REAL anchor click inside
+       the user gesture navigates reliably — Gmail compose in the browser, or
+       the Gmail app's own compose sheet on Android. No /u/0/ so whichever
+       account is logged in works. */
+    try {
+      var a = document.createElement("a");
+      a.href = gm; a.target = "_blank"; a.rel = "noopener";
+      document.body.appendChild(a); a.click(); a.remove();
+    } catch(_){ try { location.href = "mailto:" + addr; } catch(_){ } }
     if (window.HifiCopyText){
       window.HifiCopyText(addr).then(function(ok){
         showToast && showToast(ok ? "آدرس ایمیل کپی شد ✅ — hifi.radio.support@gmail.com" : "hifi.radio.support@gmail.com");
@@ -9570,6 +9600,11 @@ publishApi();
   var elTabs   = document.getElementById("stTabs");
   var elCats   = document.getElementById("stCats");
   var elAddOpen= document.getElementById("stAddOpen");
+  var elBackupOpen = document.getElementById("stBackupOpen");   /* round 15b */
+  var elBackupBar  = document.getElementById("stBackupBar");
+  var backupMode = false;      /* ticking stations on the My tab */
+  var backupSel = {};          /* stable key -> true */
+  function backupKey(st){ return st.url || ("name:" + st.name); }
   var elSortBtn= document.getElementById("stSortBtn");
   var elSortLbl= document.getElementById("stSortLabel");
   var elActive = document.getElementById("stActiveFilter");
@@ -9621,7 +9656,10 @@ publishApi();
     // every row gets a stable key: the stream url when there is one, else the
     // favorite's name — so taps target the right row even for unplayable
     // "ghost" favorites that all share an empty url.
-    return '<div class="st-row' + (playingThis ? " playing" : "") + '" data-url="' + esc(st.url) + '" data-key="' + esc(st.url || ("name:" + st.name)) + '">' +
+    var bkPaint = backupMode && source === "my";   /* round 15b: tick circles */
+    var bkOn = bkPaint && !!backupSel[st.url || ("name:" + st.name)];
+    return '<div class="st-row' + (playingThis ? " playing" : "") + (bkOn ? " bk-on" : "") + '" data-url="' + esc(st.url) + '" data-key="' + esc(st.url || ("name:" + st.name)) + '">' +
+      (bkPaint ? '<span class="bk-tick" aria-hidden="true">✓</span>' : '') +
       '<span class="st-row-lead" aria-hidden="true">' +
         leadIcon +
         (locked ? '<span class="st-row-lockbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>' : "") +
@@ -9653,7 +9691,16 @@ publishApi();
     opts = opts || {};
     lastRendered = list;
     if (!list.length && !opts.appending){
-      elList.innerHTML = '<div class="st-empty">موردی پیدا نشد — Nothing found</div>';
+      if (source === "popular" && !filter && !searchTerm){
+        /* round 15: Popular ships EMPTY for Google Play — a quiet hint only.
+           No import machinery here: restoring a file is the ＋ menu's job. */
+        elList.innerHTML = '<div class="st-empty">'
+          + '<b style="display:block;font-size:13.5px;margin-bottom:6px">فهرستِ برترین‌ها خالی است</b>'
+          + '<span style="display:block;font-size:11px;color:var(--muted);line-height:1.9">از دسته‌های کشور، زبان و ژانر بگرد، یا با ＋ ایستگاه اضافه کن</span>'
+          + '</div>';
+      } else {
+        elList.innerHTML = '<div class="st-empty">موردی پیدا نشد — Nothing found</div>';
+      }
     } else if (opts.appending){
       elList.insertAdjacentHTML("beforeend", list.map(rowHTML).join(""));
     } else {
@@ -9666,6 +9713,65 @@ publishApi();
     // re-evaluate the jump arrows against the new content height
     if (typeof updateJumpArrows === "function") setTimeout(updateJumpArrows, 40);
   }
+  /* ═══ round 15b · CENTRAL RESTORE — a station file lands here and the app
+     asks WHERE to save it (My Stations / Popular / Favorites — tick any
+     combination). The stations themselves are sanitized first: NO favorite
+     or lock state ever travels to the next user. ═══ */
+  var restoreBack = document.getElementById("restoreBackdrop");
+  var restoreQueue = [];
+  var restoreDests = { my:false, popular:false, fav:false };
+  function openRestoreSheet(stations){
+    restoreQueue = window.HiFiPacks ? window.HiFiPacks.sanitize(stations) : [];
+    if (!restoreQueue.length){ showToast && showToast("فایل معتبر نبود"); return; }
+    restoreDests = { my:false, popular:false, fav:false };
+    paintRestoreUi();
+    if (restoreBack){ restoreBack.classList.add("open"); restoreBack.setAttribute("aria-hidden","false"); }
+  }
+  function closeRestoreSheet(){
+    if (restoreBack){ restoreBack.classList.remove("open"); restoreBack.setAttribute("aria-hidden","true"); }
+    restoreQueue = [];
+  }
+  function paintRestoreUi(){
+    var sub = document.getElementById("restoreSub");
+    if (sub) sub.textContent = packFaDigits(restoreQueue.length) + " ایستگاه از فایل خوانده شد — کجا ذخیره کنم؟ (هر چند مورد که می‌خواهی)";
+    var confirmBtn = document.getElementById("restoreConfirm");
+    if (confirmBtn) confirmBtn.disabled = !(restoreDests.my || restoreDests.popular || restoreDests.fav);
+    Array.prototype.forEach.call(document.querySelectorAll("#restoreOpts .sheet-choice"), function(b){
+      b.classList.toggle("on", !!restoreDests[b.getAttribute("data-dest")]);
+    });
+  }
+  (function(){
+    var opts = document.getElementById("restoreOpts");
+    if (opts) opts.addEventListener("click", function(e){
+      var b = e.target.closest(".sheet-choice"); if (!b) return;
+      var d = b.getAttribute("data-dest");
+      restoreDests[d] = !restoreDests[d];
+      paintRestoreUi();
+    });
+    var qc = document.getElementById("restoreClose");
+    if (qc) qc.addEventListener("click", closeRestoreSheet);
+    var cx = document.getElementById("restoreCancel");
+    if (cx) cx.addEventListener("click", closeRestoreSheet);
+    if (restoreBack) restoreBack.addEventListener("click", function(e){ if (e.target === restoreBack) closeRestoreSheet(); });
+    var go = document.getElementById("restoreConfirm");
+    if (go) go.addEventListener("click", function(){
+      if (!restoreQueue.length) return;
+      var names = [];
+      if (restoreDests.my){ mergeMyPack(restoreQueue); names.push("ایستگاه‌های من"); }
+      if (restoreDests.popular){ mergePopularPack(restoreQueue); names.push("برترین‌ها"); }
+      if (restoreDests.fav){
+        restoreQueue.forEach(function(x){
+          if (window.HiFiLibrary && !window.HiFiLibrary.isFav(x)) window.HiFiLibrary.toggleFav(x);
+        });
+        names.push("علاقه‌مندی‌ها");
+      }
+      if (!names.length) return;
+      showToast && showToast(packFaDigits(restoreQueue.length) + " ایستگاه در " + names.join("، ") + " ذخیره شد ✅");
+      closeRestoreSheet();
+      refresh();
+    });
+  })();
+  window.HifiRestore = { open: openRestoreSheet };
 
   function setStatus(msg){
     if (!elStatus) return;
@@ -9715,7 +9821,12 @@ publishApi();
        exit after a REAL drag must survive incidental repaints. */
     if (sortMode !== "custom") clearReorderExit();
     // add-my-station button only on the My tab
-    if (elAddOpen) elAddOpen.hidden = false; // fixed layout: add is always available
+    if (elAddOpen && !backupMode) elAddOpen.hidden = false; // fixed layout (except while ticking a backup)
+    if (elBackupOpen && !backupMode) elBackupOpen.hidden = (source !== "my");   /* round 15b */
+    if (backupMode && source !== "my"){   /* left the My tab → leave tick mode */
+      backupMode = false; backupSel = {};
+      if (elBackupBar) elBackupBar.hidden = true;
+    }
     if (elSortLbl) elSortLbl.textContent = SORT_LABELS[sortMode] || "Default";
     // active-category chip lives on the result head; shown only when a filter is set
     if (elActive){
@@ -9748,17 +9859,100 @@ publishApi();
     }
   }
 
-  /* Popular = bundled catalog + any user-promoted stations (hifiPopularCatalogV1) */
+  /* round 15: Popular = user-promoted stations ONLY (hifiPopularCatalogV1).
+     It ships empty for Google Play; the Persian pack file plants itself here. */
   function popularCatalog(){
     var extra = [];
     try { extra = JSON.parse(localStorage.getItem("hifiPopularCatalogV1") || "[]") || []; } catch(e){}
-    // de-dup by url, bundled first
     var seen = {}, out = [];
-    BUNDLED.concat(extra).forEach(function(s){
+    extra.forEach(function(s){
       if (s && s.url && !seen[s.url]){ seen[s.url] = 1; out.push(s); }
     });
     return out;
   }
+
+  /* ---- station backup / central restore (round 15b redesign) --------
+     ONE system, exactly as the user asked:
+       - My Stations tab -> backup button -> TICK any number of stations
+         -> ONE file (HIFI-BACKUP-V1). The file is CLEAN: name/url/cat/...
+         only; a locked or favorited station leaves NO trace of it.
+       - + Add Station -> from file: ANY station-carrying file (this
+         backup, older round-15 files, plain arrays) opens the CENTRAL
+         RESTORE sheet: where to save? My / Popular / Favorites - any
+         combination the user ticks. */
+  function saveKnownStation(st){
+    if (!st || !st.name || !st.url) return;
+    try {
+      var kn = JSON.parse(localStorage.getItem("hifiKnownStationsV1") || "{}") || {};
+      kn[st.name] = st;
+      localStorage.setItem("hifiKnownStationsV1", JSON.stringify(kn));
+    } catch(e){}
+  }
+  /* Persian digits for the toasts — local copy (the global faDigits lives in
+     a different module scope) */
+  function packFaDigits(n){
+    return String(n).replace(/\d/g, function(d){ return "۰۱۲۳۴۵۶۷۸۹"[+d]; });
+  }
+  function mergePopularPack(list){
+    var cur = [];
+    try { cur = JSON.parse(localStorage.getItem("hifiPopularCatalogV1") || "[]") || []; } catch(e){}
+    var seen = {}; cur.forEach(function(s){ if (s && s.url) seen[s.url] = 1; });
+    var add = 0;
+    (list || []).forEach(function(s){
+      if (!s || !s.url || seen[s.url]) return;
+      seen[s.url] = 1; cur.push(s); add++;
+      saveKnownStation(s);   /* resolvable forever (favorites/recents lookups) */
+    });
+    try { localStorage.setItem("hifiPopularCatalogV1", JSON.stringify(cur)); } catch(e2){}
+    return add;
+  }
+  function mergeMyPack(list){
+    var add = 0;
+    (list || []).forEach(function(s){
+      if (s && s.url && window.HiFiLibrary && window.HiFiLibrary.addCustom){ window.HiFiLibrary.addCustom(s); add++; }
+    });
+    return add;
+  }
+  window.HiFiPacks = {
+    BACKUP_MAGIC: "HIFI-BACKUP-V1",
+    /* the ONLY fields a station may carry inside a backup file — a locked or
+       favorited station leaves NO trace of that state (round 15b directive) */
+    CLEAN_FIELDS: ["name","url","cat","lang","country","bitrate","desc","codec","countrycode","homepage"],
+    sanitize: function(list){
+      var F = this.CLEAN_FIELDS;
+      return (list || []).filter(function(st){ return st && st.name && st.url; }).map(function(st){
+        var o = {};
+        F.forEach(function(k){ if (st[k]) o[k] = st[k]; });
+        return o;
+      });
+    },
+    /* any station-carrying file (old round-15 magics still welcome) */
+    detectBackup: function(data){
+      if (!data || typeof data !== "object") return null;
+      if (Array.isArray(data.stations) &&
+          (data.magic === "HIFI-BACKUP-V1" || data.magic === "HIFI-MY-BACKUP-V1" || data.magic === "HIFI-STATION-PACK-V1"))
+        return data.stations;
+      if (Array.isArray(data) && data.length > 1 && data[0] && (data[0].url || data[0].name)) return data;
+      return null;
+    },
+    buildBackup: function(stations, label){
+      var clean = this.sanitize(stations);
+      return { magic:"HIFI-BACKUP-V1", at:new Date().toISOString(),
+               name: label || "HiFi Radio — Station Backup",
+               count: clean.length, stations: clean };
+    },
+    download: function(filename, payload){
+      try {
+        var blob = new Blob([JSON.stringify(payload, null, 2)], { type:"application/json" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url; a.download = filename;
+        document.body.appendChild(a); a.click();
+        setTimeout(function(){ a.remove(); URL.revokeObjectURL(url); }, 300);
+        return true;
+      } catch(e){ return false; }
+    }
+  };
   function inPopular(st){
     if (!st || !st.url) return false;
     return popularCatalog().some(function(s){ return s.url === st.url; });
@@ -10076,6 +10270,16 @@ publishApi();
       var list = (container === elList) ? lastRendered : favRendered;
       var st = list.filter(function(s){ return (s.url || ("name:" + s.name)) === key; })[0];
       if (!st) return;
+
+      /* round 15b: on the My tab in backup mode a tap TICKS the row — it does
+         not play, favorite, or open the row menu */
+      if (backupMode && container === elList){
+        var bk = backupKey(st);
+        if (backupSel[bk]) delete backupSel[bk]; else backupSel[bk] = true;
+        row.classList.toggle("bk-on", !!backupSel[bk]);
+        paintBackupBar();
+        return;
+      }
 
       if (e.target.closest(".st-row-fav")){
         if (window.HiFiLibrary) window.HiFiLibrary.toggleFav(st);
@@ -10529,6 +10733,46 @@ publishApi();
 
   /* ---- add / edit station modal (full, faithful) ------------------------ */
   if (elAddOpen) elAddOpen.addEventListener("click", function(){ openAddModal(null); });
+
+  /* round 15b (user redesign): the My-Stations backup is SELECTIVE — tick
+     any number of rows, then build ONE clean file. No fav/lock state ever
+     travels; every tick uses the row's stable key. */
+  function paintBackupBar(){
+    if (!elBackupBar) return;
+    var n = Object.keys(backupSel).length;
+    var c = document.getElementById("stBackupCount");
+    if (c) c.textContent = packFaDigits(n) + " ایستگاه انتخاب شد";
+    var mk = document.getElementById("stBackupMake");
+    if (mk) mk.disabled = (n === 0);
+  }
+  function enterBackupMode(){
+    if (source !== "my") return;
+    backupMode = true; backupSel = {};
+    if (elBackupBar) elBackupBar.hidden = false;
+    if (elAddOpen) elAddOpen.hidden = true;
+    if (elBackupOpen) elBackupOpen.hidden = true;
+    paintBackupBar();
+    refresh();
+  }
+  function exitBackupMode(){
+    backupMode = false; backupSel = {};
+    if (elBackupBar) elBackupBar.hidden = true;
+    if (elAddOpen) elAddOpen.hidden = false;
+    refresh();   /* refresh() re-shows the backup button on the My tab */
+  }
+  if (elBackupOpen) elBackupOpen.addEventListener("click", enterBackupMode);
+  var bkCancel = document.getElementById("stBackupCancel");
+  if (bkCancel) bkCancel.addEventListener("click", exitBackupMode);
+  var bkMake = document.getElementById("stBackupMake");
+  if (bkMake) bkMake.addEventListener("click", function(){
+    var picked = lastRendered.filter(function(st){ return !!backupSel[backupKey(st)]; });
+    var payload = window.HiFiPacks ? window.HiFiPacks.buildBackup(picked) : null;
+    if (!payload || !payload.count){ showToast && showToast("ابتدا ایستگاه‌هایی را انتخاب کن"); return; }
+    var stamp = new Date().toISOString().slice(0,10).replace(/-/g,"");
+    var ok = window.HiFiPacks.download("HiFiRadio-Backup-" + stamp + ".json", payload);
+    showToast && showToast(ok ? "فایلِ پشتیبانِ " + packFaDigits(payload.count) + " ایستگاه ذخیره شد ✅" : "ساخت فایل ممکن نشد");
+    exitBackupMode();
+  });
 
   /* ---- Favorites tab ---------------------------------------------------- */
   var favRendered = [];
@@ -10998,6 +11242,16 @@ publishApi();
       if (!st){
         try {
           var data = JSON.parse(text);
+          /* round 15b: any station-carrying FILE (backup) goes to the CENTRAL
+             RESTORE — the app asks WHERE to save it (My / Popular / Favorites,
+             tick any combination) instead of deciding itself */
+          var fromFile = window.HiFiPacks ? window.HiFiPacks.detectBackup(data) : null;
+          if (fromFile && fromFile.length && window.HifiRestore){
+            var mb = document.getElementById("mineBack");
+            if (mb) mb.remove();
+            window.HifiRestore.open(fromFile);
+            return;
+          }
           st = Array.isArray(data) ? data[0] : (data.station || data);
         } catch(e){}
       }
