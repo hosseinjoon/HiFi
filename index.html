@@ -2523,23 +2523,35 @@ html[data-hifi-texture="mono"] .hifi-texture-surface{opacity:.93;background-colo
 .factory-btn.go{ color:#fff3ec; border:1px solid #ffb08c; background:linear-gradient(145deg,#e97848,#b93f3b); box-shadow:0 6px 16px -7px rgba(210,64,55,.7); }
 
 
-/* ---- round 15c: My-Stations backup — SLIM & quiet (user redesign) --------
-   one thin pill under the two big actions (spans the grid, nothing squeezes),
-   SQUARE tick boxes, and small delicate buttons. */
-.bk-open{ grid-column:1 / -1; display:flex; align-items:center; justify-content:center; gap:7px;
-  min-height:32px; padding:4px 10px; border-radius:10px; cursor:pointer;
-  border:1px solid rgba(180,140,255,.26);
+/* ---- round 16: SMART actions row + slim backup UI -------------------------
+   On My & Popular the two big buttons collapse into ONE slim row
+   (add = labelled, extras = small icons) so the list breathes. Ticks are
+   SQUARE. While ticking, the row belongs to the backup bar alone. */
+.st-actions.slim{ grid-template-columns:minmax(0,1fr) auto auto; gap:6px; }
+.st-actions.slim .st-act{ min-height:36px; border-radius:10px; }
+.st-actions.slim .st-act-copy small{ display:none; }        /* one-line add button */
+.st-mini{ appearance:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  width:40px; min-height:36px; padding:0; border-radius:10px;
+  border:1px solid rgba(180,140,255,.28);
   background:linear-gradient(145deg, rgba(90,55,160,.28), rgba(24,12,52,.5));
-  color:var(--text); font-family:inherit; font-size:11.5px; font-weight:800;
-  transition:border-color .16s ease, background .16s ease; }
-.bk-open svg{ width:14px; height:14px; color:var(--gold); flex:none; }
-.bk-open:active{ transform:scale(.98); border-color:rgba(255,209,102,.45); }
+  color:var(--text); font-family:inherit; }
+.st-mini svg{ width:17px; height:17px; color:var(--gold); }
+.st-mini:active{ transform:scale(.92); border-color:rgba(255,209,102,.5); }
+.st-actions.ticking > *:not(#stBackupBar){ display:none !important; }
 .bk-tick{ flex:none; width:19px; height:19px; margin-left:1px; border-radius:4px;
   border:1.5px solid rgba(180,140,255,.45); display:grid; place-items:center;
   font-size:11px; font-weight:900; color:transparent;
   transition:background .12s ease, color .12s ease, border-color .12s ease; }
 .st-row.bk-on .bk-tick{ background:linear-gradient(145deg,#fff1a8,#f0ad3f); border-color:#fff0b4; color:#3b2306; }
 #restoreOpts{ display:flex; flex-direction:column; gap:8px; padding:2px 0 6px; }
+/* round 16 (user request): an ALWAYS-VISIBLE square tick box on each restore
+   destination, so it's obvious the options are tickable */
+#restoreOpts .sheet-choice .sc-check{ opacity:1; border:1.5px solid rgba(180,140,255,.5);
+  border-radius:6px; display:grid; place-items:center; background:rgba(15,8,32,.4); }
+#restoreOpts .sheet-choice .sc-check svg{ opacity:0; }
+#restoreOpts .sheet-choice.on .sc-check{ border-color:#ffd166; background:linear-gradient(145deg,#fff1a8,#f0ad3f); }
+#restoreOpts .sheet-choice.on .sc-check svg{ opacity:1; color:#3b2306; }
 #stBackupBar{ grid-column:1 / -1; display:flex; align-items:center; gap:7px; min-width:0;
   padding:5px 6px 5px 10px; border-radius:10px; border:1px solid rgba(180,140,255,.22);
   background:linear-gradient(145deg, rgba(90,55,160,.3), rgba(24,12,52,.55)); }
@@ -2865,11 +2877,13 @@ html[data-hifi-texture="mono"] .hifi-texture-surface{opacity:.93;background-colo
               <span class="st-act-plus">＋</span>
               <span class="st-act-copy"><b>افزودن رادیو</b><small>Add Station</small></span>
             </button>
-            <!-- round 15c: slim backup pill (spans the grid as ONE quiet row —
-                 the two big buttons above keep their exact layout) -->
-            <button class="bk-open" id="stBackupOpen" type="button" hidden>
+            <!-- round 16: SMART row — on My & Popular the big buttons tuck
+                 away and small icon buttons take their seat, opening space -->
+            <button class="st-mini" id="stBackupOpen" type="button" hidden aria-label="پشتیبان‌گیری">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>
-              <span>پشتیبان‌گیری</span>
+            </button>
+            <button class="st-mini" id="stWipeBtn" type="button" hidden aria-label="پاک‌کردن همه">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/><path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"/><path d="M10 11v6M14 11v6"/></svg>
             </button>
             <div id="stBackupBar" hidden>
               <span id="stBackupCount">۰ مورد انتخاب شد</span>
@@ -3094,7 +3108,7 @@ html[data-hifi-texture="mono"] .hifi-texture-surface{opacity:.93;background-colo
               <span class="set-static">فارسی · EN</span>
             </div>
             <div class="set-row">
-              <span class="sr-copy"><b>نسخهٔ اپ <i>App Version</i></b><small id="appVerLine">HiFi Radio Global — v1.29.2</small></span>
+              <span class="sr-copy"><b>نسخهٔ اپ <i>App Version</i></b><small id="appVerLine">HiFi Radio Global — v1.29.3</small></span>
               <span class="set-badge">Stable</span>
             </div>
           </section>
@@ -3135,7 +3149,7 @@ html[data-hifi-texture="mono"] .hifi-texture-surface{opacity:.93;background-colo
               <div class="hfa-top">
                 <div class="hfa-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8df5dd" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 3 7 7.6"/><rect x="2.6" y="7.6" width="18.8" height="12.8" rx="3.2"/><circle cx="16.4" cy="14" r="3.1"/><path d="M6.4 11.6h4.6M6.4 15.2h4.6M6.4 18h2.6"/></svg></div>
                 <div class="hfa-titles"><h3>HiFi Radio Global</h3><small>پخش‌کنندهٔ جهانی رادیوی اینترنتی · Global internet radio player</small></div>
-                <span class="hfa-ver">v1.29.2</span>
+                <span class="hfa-ver">v1.29.3</span>
               </div>
 
               <p class="hfa-p">HiFi Radio Global یک پخش‌کنندهٔ مستقل و چندزبانهٔ رادیوی اینترنتی است که دسترسی به هزاران ایستگاه زندهٔ رادیویی از سراسر جهان را در یک برنامهٔ سبک، سریع و بدون وابستگی به سرویس بیرونی فراهم می‌کند. جست‌وجوی ایستگاه بر اساس نام، کشور، زبان و ژانر انجام می‌شود و نتیجه بی‌درنگ و بدون نیاز به ثبت‌نام یا حساب کاربری در دسترس است.</p>
@@ -3290,6 +3304,21 @@ html[data-hifi-texture="mono"] .hifi-texture-surface{opacity:.93;background-colo
         <div class="factory-actions">
           <button class="factory-btn cancel" id="appearCancel" type="button">انصراف — Cancel</button>
           <button class="factory-btn go" id="appearConfirm" type="button">بازنشانی — Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- round 16: delete-all confirm (My Stations / Popular) -->
+    <div class="sheet-backdrop" id="wipeBackdrop" aria-hidden="true">
+      <div class="sheet" id="wipeSheet" role="dialog" aria-label="پاک‌کردن همه">
+        <button class="sheet-x" id="wipeClose" type="button" aria-label="بستن">✕</button>
+        <div class="sheet-head">
+          <h3 id="wipeTitle">پاک‌کردن همه</h3>
+          <p id="wipeText">—</p>
+        </div>
+        <div class="factory-actions">
+          <button class="factory-btn cancel" id="wipeCancel" type="button">انصراف — Cancel</button>
+          <button class="factory-btn go" id="wipeConfirm" type="button">بپاک — Delete All</button>
         </div>
       </div>
     </div>
@@ -6135,6 +6164,12 @@ var qrcode = function() {
       ".hps-bio[hidden]{display:none}" +
       ".hps-bio svg{width:19px;height:19px;color:#ffd166;flex:none}" +
       ".hps-bio:active{transform:scale(.97);border-color:rgba(255,209,102,.55)}" +
+      /* round 16 (user photo): the sensor button crowded the helper text —
+         real breathing room, and the sheet scrolls safely on short screens */
+      ".hps-bio{margin-top:14px}" +
+      ".hps-helper{margin-top:12px;line-height:1.7}" +
+      ".hps-subtitle{padding:0 6px}" +
+      "#hifiPinSheet{overflow-y:auto}" +
       /* biometric waiting card — a soft in-app bridge so calling the OS
          sensor never feels like the app died and came back */
       "#hifiBioSheet{display:flex;position:fixed;inset:0;z-index:1990;padding:18px;background:rgba(3,10,18,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);will-change:opacity;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s}" +
@@ -9612,6 +9647,14 @@ publishApi();
   var elAddOpen= document.getElementById("stAddOpen");
   var elBackupOpen = document.getElementById("stBackupOpen");   /* round 15b */
   var elBackupBar  = document.getElementById("stBackupBar");
+  var elWipeBtn    = document.getElementById("stWipeBtn");       /* round 16 */
+  var elActions    = document.getElementById("stActions");
+  function wipeCount(t){
+    try {
+      if (t === "my") return (window.HiFiLibrary ? window.HiFiLibrary.custom().length : 0);
+      return JSON.parse(localStorage.getItem("hifiPopularCatalogV1") || "[]").length;
+    } catch(e){ return 0; }
+  }
   var backupMode = false;      /* ticking stations on the My tab */
   var backupSel = {};          /* stable key -> true */
   function backupKey(st){ return st.url || ("name:" + st.name); }
@@ -9783,6 +9826,47 @@ publishApi();
   })();
   window.HifiRestore = { open: openRestoreSheet };
 
+  /* ═══ round 16 · DELETE-ALL (user request) — for My Stations and Popular,
+     always behind a confirmation sheet. Favorites keeps its own clear. ═══ */
+  var wipeBack = document.getElementById("wipeBackdrop");
+  var wipeTarget = "";
+  function openWipe(t){
+    var n = wipeCount(t);
+    if (!n){ showToast && showToast("چیزی برای پاک‌کردن نیست"); return; }
+    wipeTarget = t;
+    var tt = document.getElementById("wipeTitle"), tx = document.getElementById("wipeText");
+    if (t === "my"){
+      if (tt) tt.textContent = "پاک‌کردن همهٔ ایستگاه‌های من";
+      if (tx) tx.textContent = packFaDigits(n) + " ایستگاهِ «ایستگاه‌های من» برای همیشه پاک شود؟ این کار برگشت‌پذیر نیست.";
+    } else {
+      if (tt) tt.textContent = "خالی‌کردن برترین‌ها";
+      if (tx) tx.textContent = packFaDigits(n) + " ایستگاه از برترین‌ها برداشته شود؟ ایستگاه‌های خودت هر جا باشند دست‌نخورده می‌مانند.";
+    }
+    if (wipeBack){ wipeBack.classList.add("open"); wipeBack.setAttribute("aria-hidden","false"); }
+  }
+  function closeWipe(){
+    if (wipeBack){ wipeBack.classList.remove("open"); wipeBack.setAttribute("aria-hidden","true"); }
+    wipeTarget = "";
+  }
+  (function(){
+    if (elWipeBtn) elWipeBtn.addEventListener("click", function(){ openWipe(source === "my" ? "my" : "popular"); });
+    var qc = document.getElementById("wipeClose");   if (qc) qc.addEventListener("click", closeWipe);
+    var cx = document.getElementById("wipeCancel");  if (cx) cx.addEventListener("click", closeWipe);
+    if (wipeBack) wipeBack.addEventListener("click", function(e){ if (e.target === wipeBack) closeWipe(); });
+    var go = document.getElementById("wipeConfirm");
+    if (go) go.addEventListener("click", function(){
+      if (wipeTarget === "my"){
+        window.HiFiLibrary.custom().slice().forEach(function(x){ window.HiFiLibrary.removeCustom(x.url); });
+        showToast && showToast("همهٔ ایستگاه‌های من پاک شد");
+      } else if (wipeTarget === "popular"){
+        try { localStorage.setItem("hifiPopularCatalogV1", "[]"); } catch(e){}
+        showToast && showToast("برترین‌ها خالی شد");
+      } else return;
+      closeWipe();
+      refresh();
+    });
+  })();
+
   function setStatus(msg){
     if (!elStatus) return;
     if (msg){ elStatus.hidden = false; elStatus.textContent = msg; }
@@ -9831,8 +9915,14 @@ publishApi();
        exit after a REAL drag must survive incidental repaints. */
     if (sortMode !== "custom") clearReorderExit();
     // add-my-station button only on the My tab
-    if (elAddOpen && !backupMode) elAddOpen.hidden = false; // fixed layout (except while ticking a backup)
-    if (elBackupOpen && !backupMode) elBackupOpen.hidden = (source !== "my");   /* round 15b */
+    /* round 16 (user request): the tab acts SMART — on My & Popular the
+       extra options tuck away and ONE slim row opens up working space */
+    var slim = (source === "my" || source === "popular");
+    if (elActions) elActions.classList.toggle("slim", slim);
+    if (elSortBtn) elSortBtn.hidden = slim || backupMode;      /* extras hide while slim */
+    if (elAddOpen && !backupMode) elAddOpen.hidden = false;    // fixed layout (except while ticking)
+    if (elBackupOpen && !backupMode) elBackupOpen.hidden = !(slim && source === "my");
+    if (elWipeBtn && !backupMode) elWipeBtn.hidden = !(slim && wipeCount(source) > 0);
     if (backupMode && source !== "my"){   /* left the My tab → leave tick mode */
       backupMode = false; backupSel = {};
       if (elBackupBar) elBackupBar.hidden = true;
@@ -10707,7 +10797,9 @@ publishApi();
     } else {
       html += menuItem("pop", pop ? "برداشتن از برترین‌ها" : "افزودن به برترین‌ها", pop ? "Remove from Popular" : "Add to Popular");
     }
-    if (st.custom){
+    /* round 16 (user report): stations that arrived via a restored file can
+       lack the custom flag — on the MY tab EVERY row gets edit + delete */
+    if (st.custom || source === "my"){
       html += '<div class="st-mi-sep"></div>';
       html += menuItem("edit", "ویرایش نام و آدرس", "Edit");
       html += menuItem("del",  "حذف از ایستگاه‌های من", "Delete", "is-danger");
@@ -10760,18 +10852,21 @@ publishApi();
     if (source !== "my") return;
     backupMode = true; backupSel = {};
     if (elBackupBar) elBackupBar.hidden = false;
+    if (elActions) elActions.classList.add("ticking");   /* the bar owns the row */
     if (elAddOpen) elAddOpen.hidden = true;
-    if (elSortBtn) elSortBtn.hidden = true;      /* the slim bar owns the row */
+    if (elSortBtn) elSortBtn.hidden = true;
     if (elBackupOpen) elBackupOpen.hidden = true;
+    if (elWipeBtn) elWipeBtn.hidden = true;
     paintBackupBar();
     refresh();
   }
   function exitBackupMode(){
     backupMode = false; backupSel = {};
     if (elBackupBar) elBackupBar.hidden = true;
+    if (elActions) elActions.classList.remove("ticking");
     if (elAddOpen) elAddOpen.hidden = false;
     if (elSortBtn) elSortBtn.hidden = false;
-    refresh();   /* refresh() re-shows the backup pill on the My tab */
+    refresh();   /* refresh() re-applies the smart slim row */
   }
   if (elBackupOpen) elBackupOpen.addEventListener("click", enterBackupMode);
   var bkCancel = document.getElementById("stBackupCancel");
