@@ -3108,7 +3108,7 @@ html[data-hifi-texture="mono"] .hifi-texture-surface{opacity:.93;background-colo
               <span class="set-static">فارسی · EN</span>
             </div>
             <div class="set-row">
-              <span class="sr-copy"><b>نسخهٔ اپ <i>App Version</i></b><small id="appVerLine">HiFi Radio Global — v1.29.3</small></span>
+              <span class="sr-copy"><b>نسخهٔ اپ <i>App Version</i></b><small id="appVerLine">HiFi Radio Global — v1.29.4</small></span>
               <span class="set-badge">Stable</span>
             </div>
           </section>
@@ -3149,7 +3149,7 @@ html[data-hifi-texture="mono"] .hifi-texture-surface{opacity:.93;background-colo
               <div class="hfa-top">
                 <div class="hfa-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8df5dd" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 3 7 7.6"/><rect x="2.6" y="7.6" width="18.8" height="12.8" rx="3.2"/><circle cx="16.4" cy="14" r="3.1"/><path d="M6.4 11.6h4.6M6.4 15.2h4.6M6.4 18h2.6"/></svg></div>
                 <div class="hfa-titles"><h3>HiFi Radio Global</h3><small>پخش‌کنندهٔ جهانی رادیوی اینترنتی · Global internet radio player</small></div>
-                <span class="hfa-ver">v1.29.3</span>
+                <span class="hfa-ver">v1.29.4</span>
               </div>
 
               <p class="hfa-p">HiFi Radio Global یک پخش‌کنندهٔ مستقل و چندزبانهٔ رادیوی اینترنتی است که دسترسی به هزاران ایستگاه زندهٔ رادیویی از سراسر جهان را در یک برنامهٔ سبک، سریع و بدون وابستگی به سرویس بیرونی فراهم می‌کند. جست‌وجوی ایستگاه بر اساس نام، کشور، زبان و ژانر انجام می‌شود و نتیجه بی‌درنگ و بدون نیاز به ثبت‌نام یا حساب کاربری در دسترس است.</p>
@@ -7345,6 +7345,51 @@ var qrcode = function() {
     isPlaying: function(){ return !audio.paused; }
   };
 })();
+</script>
+<script>/* ============================================================================
+   ROUND 17 · MEDIA SESSION — the lock-screen / notification media
+     controls (user request 2026-09-03). In Chrome on Android this puts the
+     play/pause/next/prev panel on the lock screen and in the notification
+     shade RIGHT NOW; inside the APK the native MediaSession service (from
+     the previous build's recipe) covers the same seat. Purely additive and
+     fully guarded — without the API the app runs exactly as before. ═══ */
+  (function(){
+    "use strict";
+    var ms = null;
+    try { ms = navigator.mediaSession || null; } catch(e){ return; }
+    if (!ms || typeof window.MediaMetadata === "undefined") return;  /* sleeps where unsupported */
+    function meta(){
+      try {
+        var st = window.HiFiPlayer && window.HiFiPlayer.getCurrent();
+        if (!st) return;
+        ms.metadata = new MediaMetadata({
+          title: st.name || "HiFi Radio",
+          artist: [st.country, st.language].filter(Boolean).join(" · ") || "Internet Radio",
+          album: "HiFi Radio Global"
+        });                                  /* no artwork: the app is CDN-free by law */
+      } catch(e){}
+    }
+    function state(playing){
+      try { if ("playbackState" in ms) ms.playbackState = playing ? "playing" : "paused"; } catch(e){}
+    }
+    (function bind(){
+      try {
+        var P = window.HiFiPlayer;
+        var want = function(playing){ return function(){ try { if (P && P.isPlaying() !== playing) P.toggle(); } catch(e){} }; };
+        ms.setActionHandler("play",  want(true));
+        ms.setActionHandler("pause", want(false));
+        ms.setActionHandler("stop",  want(false));
+        ms.setActionHandler("nexttrack",     function(){ try { P && P.next(); } catch(e){} });
+        ms.setActionHandler("previoustrack", function(){ try { P && P.prev(); } catch(e){} });
+      } catch(e){}
+    })();
+    window.addEventListener("hifi:station", function(){ meta(); });
+    document.addEventListener("play",  function(){ state(true);  meta(); }, true);
+    document.addEventListener("pause", function(){ state(false); }, true);
+    document.addEventListener("ended", function(){ state(false); }, true);
+    meta();
+    state(!!(window.HiFiPlayer && window.HiFiPlayer.isPlaying()));
+  })();
 </script>
   <script>/* ============================================================================
    LIBRARY — favorites, recents, and "My Stations" (custom URLs).
